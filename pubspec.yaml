@@ -1,0 +1,66 @@
+name: microzaim
+description: "Created by DevApp"
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Icons
+  cupertino_icons: ^1.0.2
+  ionicons: ^0.2.2
+
+  # Networking
+  chopper: ^6.1.1
+
+  # MobX
+  mobx: ^2.1.3
+  flutter_mobx: ^2.0.6+5
+
+  # Shared Preferences
+  shared_preferences: ^2.2.3
+
+  # Url launcher
+  url_launcher: ^6.2.4
+
+  # Fonts
+  google_fonts: ^4.0.1
+
+  # Rename
+  rename: ^3.0.1
+
+  # Others
+  flutter_hooks: ^0.18.5+1
+  get_it: ^7.2.0
+  provider: ^6.0.5
+  japx: ^2.0.3
+  json_annotation: ^4.8.0
+  awesome_dio_interceptor: ^0.0.2+4
+  auto_route: ^5.0.4
+  flutter_svg: ^2.0.3
+  async: ^2.10.0
+  connectivity_plus: ^3.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  auto_route_generator: ^5.0.3
+  chopper_generator: ^6.0.0
+  mobx_codegen: ^2.1.1
+  json_serializable: ^6.6.1
+  build_runner: ^2.3.3
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/app_logo.svg
