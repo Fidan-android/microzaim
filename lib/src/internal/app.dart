@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:microzaim/src/domain/state/init/init_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,6 +37,11 @@ class _ApplicationPageState extends State<Application> {
               Provider(
                 create: (context) => StorageRepository(
                   Provider.of<SharedPreferences>(context, listen: false),
+                ),
+              ),
+              Provider(
+                create: (context) => InitState(
+                  Provider.of<StorageRepository>(context, listen: false),
                 ),
               ),
             ],

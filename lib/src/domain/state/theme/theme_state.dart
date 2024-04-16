@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../data/repository/theme_repository.dart';
+import '../../../data/repository/theme_repository.dart';
 
 part 'theme_state.g.dart';
 
