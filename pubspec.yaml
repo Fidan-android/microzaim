@@ -27,7 +27,7 @@ dependencies:
   shared_preferences: ^2.2.3
 
   # Url launcher
-  url_launcher: ^6.2.4
+  url_launcher: ^6.2.6
 
   # Fonts
   google_fonts: ^4.0.1
@@ -64,9 +64,24 @@ flutter:
 
   assets:
     - assets/images/app_logo.svg
+    - assets/images/ic_home.svg
+    - assets/images/ic_calculator.svg
+    - assets/images/ic_calendar.svg
+    - assets/images/ic_settings.svg
     - assets/images/welcome/ic_lines.svg
     - assets/images/welcome/ic_bank.png
     - assets/images/welcome/ic_book.png
+    - assets/images/main/ic_russian.svg
+    - assets/images/main/ic_kazakhstan.svg
+    - assets/images/main/ic_arrow_right.svg
+    - assets/images/main/ic_first.png
+    - assets/images/main/ic_second.png
+    - assets/images/main/ic_third.png
+    - assets/images/main/ic_fourth.png
+    - assets/images/main/ic_fifth.png
+    - assets/images/main/ic_sixth.png
+    - assets/images/main/ic_seventh.png
+    - assets/images/main/ic_eighth.png
 
   fonts:
     - family: SFProText

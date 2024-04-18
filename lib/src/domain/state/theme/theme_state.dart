@@ -16,6 +16,42 @@ abstract class ThemeStateBase with Store {
   ThemeData get lightTheme => ThemeData(
         useMaterial3: false,
         brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0xFFFCFEF7),
+        splashColor: const Color(0xFFBCFE2B),
+        primaryColor: const Color(0xFF0F3F15),
+        primaryTextTheme: const TextTheme(
+          bodySmall: TextStyle(
+              color: Color(0xFF0F3F15),
+              fontFamily: 'SFProText',
+              fontSize: 12,
+              fontWeight: FontWeight.w400),
+          bodyMedium: TextStyle(
+              color: Color(0xFF0F3F15),
+              fontFamily: 'SFProText',
+              fontSize: 16,
+              fontWeight: FontWeight.w500),
+          bodyLarge: TextStyle(
+              color: Color(0xFF0F3F15),
+              fontFamily: 'SFProText',
+              fontSize: 18,
+              fontWeight: FontWeight.w500),
+          titleMedium: TextStyle(
+              color: Color(0xFF0F3F15),
+              fontFamily: 'SFProText',
+              fontSize: 20,
+              fontWeight: FontWeight.w500),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFFF8FEFB),
+          selectedItemColor: Color(0xFF1C5337),
+          elevation: 0,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      );
+
+  ThemeData get darkTheme => ThemeData(
+        useMaterial3: false,
+        brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.white,
         splashColor: const Color(0xFFBCFE2B),
         primaryTextTheme: TextTheme(
@@ -40,34 +76,6 @@ abstract class ThemeStateBase with Store {
         ),*/
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
-
-  ThemeData get darkTheme => ThemeData(
-    useMaterial3: false,
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: Colors.white,
-    splashColor: const Color(0xFFBCFE2B),
-    primaryTextTheme: TextTheme(
-      bodySmall: GoogleFonts.openSans(
-        textStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 14,
-        ),
-      ),
-      bodyMedium: GoogleFonts.openSans(
-        textStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-        ),
-      ),
-    ),
-    /*bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: ColorLibrary.gray,
-          selectedItemColor: ColorLibrary.blue,
-          unselectedItemColor: ColorLibrary.gray,
-          elevation: 0,
-        ),*/
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-  );
 
   Future<ThemeData> _getTheme() async {
     final String? themeKey = await _themeRepository.getThemeKey();

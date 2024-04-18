@@ -16,9 +16,8 @@ abstract class InitStateBase with Store {
 
   @action
   Future checkingTheFirstLaunch() async {
-    isFirstLaunch = true;
-    /*isFirstLaunch =
-        _storageRepository.shared<bool>(SharedKeys.firstLaunch.key) ?? true;*/
+    isFirstLaunch =
+        _storageRepository.shared<bool>(SharedKeys.firstLaunch.key) ?? true;
     await _storageRepository.saveShared(SharedKeys.firstLaunch.key, false);
   }
 }

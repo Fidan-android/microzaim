@@ -22,10 +22,9 @@ class _InitPageState extends State<InitPage> {
     _disposers = [
       reaction((_) => _initState.isFirstLaunch, (bool? isFirstLaunch) {
         if (isFirstLaunch == true) {
-          debugPrint("is first launch");
           AutoRouter.of(context).replaceNamed("/welcome-page");
         } else if (isFirstLaunch == false) {
-          debugPrint("is not first launch");
+          AutoRouter.of(context).replaceNamed("/home-page");
         }
       })
     ];
