@@ -47,7 +47,10 @@ class ArticlePage extends StatelessWidget {
                     SizedBox.fromSize(size: const Size(20, 20)),
                   ],
                 ),
-                configureTextOfArticle(context),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: configureTextOfArticle(context),
+                ),
               ],
             ),
           ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class SubPage extends StatefulWidget {
+  const SubPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<SubPage> createState() => _SubPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SubPageState extends State<SubPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

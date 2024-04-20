@@ -3,6 +3,7 @@ import 'package:microzaim/src/presentation/article/article_for_kazakhstan_page.d
 import 'package:microzaim/src/presentation/article/article_for_russia_page.dart';
 import 'package:microzaim/src/presentation/article/article_page.dart';
 import 'package:microzaim/src/presentation/home.page.dart';
+import 'package:microzaim/src/presentation/sub/sub_page.dart';
 import 'package:microzaim/src/presentation/welcome/welcome.dart';
 
 import '../presentation/init_page.dart';
@@ -17,6 +18,7 @@ import 'app_route.gr.dart';
     AutoRoute(page: ArticleForRussiaPage),
     AutoRoute(page: ArticleForKazakhstanPage),
     AutoRoute(page: ArticlePage),
+    AutoRoute(page: SubPage),
   ],
 )
 class $NavigationRouter {}
