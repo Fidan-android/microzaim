@@ -64,10 +64,12 @@ flutter:
 
   assets:
     - assets/images/app_logo.svg
+    - assets/images/app_logo_gray.svg
     - assets/images/ic_home.svg
     - assets/images/ic_calculator.svg
     - assets/images/ic_calendar.svg
     - assets/images/ic_settings.svg
+    - assets/images/ic_plus.svg
     - assets/images/welcome/ic_lines.svg
     - assets/images/welcome/ic_bank.png
     - assets/images/welcome/ic_book.png

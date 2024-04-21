@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -94,34 +95,37 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: Card(
-                elevation: 0,
-                color: const Color(0xFFF1F1F1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Text(
-                            "Управление\nподпиской",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
+              child: GestureDetector(
+                onTap: () => AutoRouter.of(context).pushNamed("/sub-page"),
+                child: Card(
+                  elevation: 0,
+                  color: const Color(0xFFF1F1F1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Text(
+                              "Управление\nподпиской",
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: SvgPicture.asset(
-                            "assets/images/main/ic_arrow_right.svg"),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16),
+                          child: SvgPicture.asset(
+                              "assets/images/main/ic_arrow_right.svg"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
