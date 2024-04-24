@@ -11,8 +11,7 @@ class BookView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 120),
+        Center(
           child: SizedBox(
             width: 280,
             height: 280,
@@ -48,7 +47,7 @@ class BookView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
                 child: Center(
                   child: SizedBox(
                     width: double.infinity,

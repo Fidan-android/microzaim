@@ -1,22 +1,18 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:microzaim/src/domain/state/home/home_state.dart';
-import 'package:microzaim/src/presentation/custom/bottom_nav_bar.dart';
-import 'package:microzaim/src/presentation/settings/settings_page.dart';
 import 'package:provider/provider.dart';
 
-import 'calculators/calculators_page.dart';
-import 'calendar/calendar_page.dart';
-import 'main/main_page.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CustomBottomNavBar extends StatefulWidget {
+  const CustomBottomNavBar({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   late HomeState _homeState;
 
   @override
@@ -25,20 +21,20 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
   }
 
-  /*@override
+  @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [
-        MainRoute(),
-        CalculatorsRoute(),
-        CalendarRoute(),
-        SettingsRoute(),
-      ],
-      homeIndex: 0,
-      bottomNavigationBuilder: (context, tabsRouter) => BottomNavigationBar(
+    return Observer(
+      builder: (_) => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        onTap: tabsRouter.setActiveIndex,
-        currentIndex: tabsRouter.activeIndex,
+        onTap: (index) {
+          if (_homeState.currentIndex != index) {
+            if (AutoRouter.of(context).canPop()) {
+              AutoRouter.of(context).pop();
+            }
+            _homeState.changeIndex(index);
+          }
+        },
+        currentIndex: _homeState.currentIndex,
         selectedFontSize: 12,
         unselectedFontSize: 12,
         items: [
@@ -92,32 +88,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    );
-  }*/
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Observer(
-          builder: (_) => Padding(
-            padding: const EdgeInsets.only(top: 20, left: 16, right: 16),
-            child: Column(
-              children: [
-                Expanded(
-                  child: [
-                    const MainPage(),
-                    const CalculatorsPage(),
-                    const CalendarPage(),
-                    const SettingsPage()
-                  ][_homeState.currentIndex],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

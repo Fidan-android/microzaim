@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:microzaim/src/data/repository/lender_repository.dart';
 import 'package:microzaim/src/domain/state/home/home_state.dart';
 import 'package:microzaim/src/domain/state/init/init_state.dart';
 import 'package:microzaim/src/domain/state/theme/theme_state.dart';
@@ -43,6 +44,7 @@ class _ApplicationPageState extends State<Application> {
                   Provider.of<SharedPreferences>(context, listen: false),
                 ),
               ),
+              Provider(create: (context) => LenderRepository()),
               Provider(
                 create: (_) => ThemeState(ThemeRepository())..getTheme(),
               ),

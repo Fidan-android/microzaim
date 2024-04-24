@@ -1,17 +1,34 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:microzaim/src/presentation/template/internal_page_template.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ArticleForRussiaPage extends StatelessWidget {
+import '../../domain/state/home/home_state.dart';
+
+class ArticleForRussiaPage extends StatefulWidget {
   const ArticleForRussiaPage({super.key});
 
   @override
+  State<ArticleForRussiaPage> createState() => _ArticleForRussiaPageState();
+}
+
+class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
+  late HomeState _homeState;
+
+  @override
+  void didChangeDependencies() {
+    _homeState = Provider.of<HomeState>(context, listen: false);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return InternalPageTemplate(
+      child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
+          padding: const EdgeInsets.only(top: 20, left: 24, right: 24, bottom: 12),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

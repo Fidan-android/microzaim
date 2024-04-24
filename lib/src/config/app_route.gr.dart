@@ -11,56 +11,57 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 
 import '../presentation/article/article_for_kazakhstan_page.dart' as _i5;
 import '../presentation/article/article_for_russia_page.dart' as _i4;
 import '../presentation/article/article_page.dart' as _i6;
 import '../presentation/home.page.dart' as _i3;
 import '../presentation/init_page.dart' as _i1;
+import '../presentation/loan/loan_page.dart' as _i8;
 import '../presentation/sub/sub_page.dart' as _i7;
 import '../presentation/welcome/welcome.dart' as _i2;
 
-class NavigationRouter extends _i8.RootStackRouter {
-  NavigationRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
+class NavigationRouter extends _i9.RootStackRouter {
+  NavigationRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i9.PageFactory> pagesMap = {
     InitRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.InitPage(),
       );
     },
     WelcomeRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.WelcomePage(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.HomePage(),
       );
     },
     ArticleForRussiaRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i4.ArticleForRussiaPage(),
       );
     },
     ArticleForKazakhstanRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i5.ArticleForKazakhstanPage(),
       );
     },
     ArticleRoute.name: (routeData) {
       final args = routeData.argsAs<ArticleRouteArgs>();
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i6.ArticlePage(
           key: args.key,
@@ -69,49 +70,59 @@ class NavigationRouter extends _i8.RootStackRouter {
       );
     },
     SubRoute.name: (routeData) {
-      return _i8.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i7.SubPage(),
+      );
+    },
+    LoanRoute.name: (routeData) {
+      return _i9.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i8.LoanPage(),
       );
     },
   };
 
   @override
-  List<_i8.RouteConfig> get routes => [
-        _i8.RouteConfig(
+  List<_i9.RouteConfig> get routes => [
+        _i9.RouteConfig(
           InitRoute.name,
           path: '/',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           WelcomeRoute.name,
           path: '/welcome-page',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           HomeRoute.name,
           path: '/home-page',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           ArticleForRussiaRoute.name,
           path: '/article-for-russia-page',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           ArticleForKazakhstanRoute.name,
           path: '/article-for-kazakhstan-page',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           ArticleRoute.name,
           path: '/article-page',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           SubRoute.name,
           path: '/sub-page',
+        ),
+        _i9.RouteConfig(
+          LoanRoute.name,
+          path: '/loan-page',
         ),
       ];
 }
 
 /// generated route for
 /// [_i1.InitPage]
-class InitRoute extends _i8.PageRouteInfo<void> {
+class InitRoute extends _i9.PageRouteInfo<void> {
   const InitRoute()
       : super(
           InitRoute.name,
@@ -123,7 +134,7 @@ class InitRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.WelcomePage]
-class WelcomeRoute extends _i8.PageRouteInfo<void> {
+class WelcomeRoute extends _i9.PageRouteInfo<void> {
   const WelcomeRoute()
       : super(
           WelcomeRoute.name,
@@ -135,7 +146,7 @@ class WelcomeRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomePage]
-class HomeRoute extends _i8.PageRouteInfo<void> {
+class HomeRoute extends _i9.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -147,7 +158,7 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.ArticleForRussiaPage]
-class ArticleForRussiaRoute extends _i8.PageRouteInfo<void> {
+class ArticleForRussiaRoute extends _i9.PageRouteInfo<void> {
   const ArticleForRussiaRoute()
       : super(
           ArticleForRussiaRoute.name,
@@ -159,7 +170,7 @@ class ArticleForRussiaRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.ArticleForKazakhstanPage]
-class ArticleForKazakhstanRoute extends _i8.PageRouteInfo<void> {
+class ArticleForKazakhstanRoute extends _i9.PageRouteInfo<void> {
   const ArticleForKazakhstanRoute()
       : super(
           ArticleForKazakhstanRoute.name,
@@ -171,9 +182,9 @@ class ArticleForKazakhstanRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.ArticlePage]
-class ArticleRoute extends _i8.PageRouteInfo<ArticleRouteArgs> {
+class ArticleRoute extends _i9.PageRouteInfo<ArticleRouteArgs> {
   ArticleRoute({
-    _i9.Key? key,
+    _i10.Key? key,
     required int numberOfArticle,
   }) : super(
           ArticleRoute.name,
@@ -193,7 +204,7 @@ class ArticleRouteArgs {
     required this.numberOfArticle,
   });
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   final int numberOfArticle;
 
@@ -205,7 +216,7 @@ class ArticleRouteArgs {
 
 /// generated route for
 /// [_i7.SubPage]
-class SubRoute extends _i8.PageRouteInfo<void> {
+class SubRoute extends _i9.PageRouteInfo<void> {
   const SubRoute()
       : super(
           SubRoute.name,
@@ -213,4 +224,16 @@ class SubRoute extends _i8.PageRouteInfo<void> {
         );
 
   static const String name = 'SubRoute';
+}
+
+/// generated route for
+/// [_i8.LoanPage]
+class LoanRoute extends _i9.PageRouteInfo<void> {
+  const LoanRoute()
+      : super(
+          LoanRoute.name,
+          path: '/loan-page',
+        );
+
+  static const String name = 'LoanRoute';
 }

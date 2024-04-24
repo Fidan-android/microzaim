@@ -1,15 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:microzaim/src/presentation/template/internal_page_template.dart';
 
 class ArticleForKazakhstanPage extends StatelessWidget {
   const ArticleForKazakhstanPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return InternalPageTemplate(
+      child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
+          padding:
+              const EdgeInsets.only(top: 20, left: 24, right: 24, bottom: 12),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

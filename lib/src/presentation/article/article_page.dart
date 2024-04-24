@@ -8,6 +8,7 @@ import 'package:microzaim/src/presentation/article/items/second_article.dart';
 import 'package:microzaim/src/presentation/article/items/seventh_article.dart';
 import 'package:microzaim/src/presentation/article/items/sixth_article.dart';
 import 'package:microzaim/src/presentation/article/items/third_article.dart';
+import 'package:microzaim/src/presentation/template/internal_page_template.dart';
 
 class ArticlePage extends StatelessWidget {
   const ArticlePage({Key? key, required this.numberOfArticle})
@@ -17,8 +18,8 @@ class ArticlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return InternalPageTemplate(
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
           child: SingleChildScrollView(

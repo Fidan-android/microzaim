@@ -29,6 +29,9 @@ dependencies:
   # Url launcher
   url_launcher: ^6.2.6
 
+  # Auto complete widget
+  autocomplete_textfield: ^2.0.1
+
   # Fonts
   google_fonts: ^4.0.1
 
@@ -84,6 +87,8 @@ flutter:
     - assets/images/main/ic_sixth.png
     - assets/images/main/ic_seventh.png
     - assets/images/main/ic_eighth.png
+    - assets/images/calculator/ic_calc_loan.png
+    - assets/images/calculator/ic_calc_burden.png
 
   fonts:
     - family: SFProText
@@ -94,3 +99,7 @@ flutter:
           weight: 500
         - asset: assets/fonts/SFProText-Bold.ttf
           weight: 700
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.otf
+          weight: 500

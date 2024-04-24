@@ -26,106 +26,97 @@ class _SettingsPageState extends State<SettingsPage> {
                   ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Card(
-                color: const Color(0xFFF1F1F1),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
+              padding: const EdgeInsets.only(top: 24),
+              child: Container(
+                height: 70,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF1F1F1),
+                  borderRadius: BorderRadius.all(Radius.circular(32)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Text(
-                            "Политика Конфиденциальности\nи Условия Использования",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Политика Конфиденциальности\nи Условия Использования",
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: SvgPicture.asset(
-                            "assets/images/main/ic_arrow_right.svg"),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: SvgPicture.asset(
+                          "assets/images/main/ic_arrow_right.svg"),
+                    ),
+                  ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Card(
-                color: const Color(0xFFF1F1F1),
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
+              padding: const EdgeInsets.only(top: 8),
+              child: Container(
+                height: 70,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF1F1F1),
+                  borderRadius: BorderRadius.all(Radius.circular(32)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: Text(
-                            "Настройка\nуведомлений",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Настройка\nуведомлений",
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: SvgPicture.asset(
-                            "assets/images/main/ic_arrow_right.svg"),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: SvgPicture.asset(
+                          "assets/images/main/ic_arrow_right.svg"),
+                    ),
+                  ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: 8),
               child: GestureDetector(
                 onTap: () => AutoRouter.of(context).pushNamed("/sub-page"),
-                child: Card(
-                  elevation: 0,
-                  color: const Color(0xFFF1F1F1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32),
+                child: Container(
+                  height: 70,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFF1F1F1),
+                    borderRadius: BorderRadius.all(Radius.circular(32)),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: Text(
-                              "Управление\nподпиской",
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600),
-                            ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "Управление\nподпиской",
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
-                          child: SvgPicture.asset(
-                              "assets/images/main/ic_arrow_right.svg"),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: SvgPicture.asset(
+                            "assets/images/main/ic_arrow_right.svg"),
+                      ),
+                    ],
                   ),
                 ),
               ),
