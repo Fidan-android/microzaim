@@ -64,7 +64,7 @@ abstract class LoanStateBase with Store {
         int.parse(termLoan);
     totalToRefunded = double.parse(amountLoan) + overpayment;
 
-    for (var i = 1; i < int.parse(termLoan); i++) {
+    for (var i = 1; i <= int.parse(termLoan); i++) {
       calculations.add(CalculationModel(
           day: i,
           dailyPayment: (totalToRefunded / double.parse(termLoan)).round(),

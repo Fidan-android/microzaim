@@ -50,64 +50,191 @@ class _LoanPageState extends State<LoanPage> {
   Widget build(BuildContext context) {
     return InternalPageTemplate(
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Container(
-            color: Colors.black,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
             child: Column(
               children: [
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 17),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50),
-                        bottomRight: Radius.circular(50),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
+                Container(
+                  color: Colors.black,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 17),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: SingleChildScrollView(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
-                                  onTap: () => AutoRouter.of(context).pop(),
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: Theme.of(context).primaryColor,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () => AutoRouter.of(context).pop(),
+                                      child: Icon(
+                                        Icons.arrow_back,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        "Расчет займа",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: null,
+                                      child: Icon(
+                                        Icons.folder_outlined,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Column(
+                                    children: [
+                                      Card(
+                                        color: const Color(0xFFF1F1F1),
+                                        elevation: 0,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(44),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: SizedBox(
+                                            height: 59,
+                                            child: TextFormField(
+                                              controller: _lenderController,
+                                              decoration: InputDecoration(
+                                                labelText: 'Займодатель',
+                                                border: InputBorder.none,
+                                                labelStyle: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: const Color(
+                                                          0x4D0F3F15),
+                                                    ),
+                                              ),
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    color:
+                                                        const Color(0xFF0F3F15),
+                                                  ),
+                                              onTapOutside: (event) {
+                                                FocusScopeNode currentFocus =
+                                                    FocusScope.of(context);
+                                                if (!currentFocus
+                                                    .hasPrimaryFocus) {
+                                                  currentFocus.unfocus();
+                                                }
+                                              },
+                                              onChanged: (value) => _loanState
+                                                  .searchLender(value),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Observer(
+                                        builder: (_) => Visibility(
+                                          visible:
+                                              _loanState.lenders.isNotEmpty,
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 12),
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                color: Color(0xFFF1F1F1),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(44),
+                                                ),
+                                              ),
+                                              padding: const EdgeInsets.all(8),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                        maxHeight: 180),
+                                                child: ListView.separated(
+                                                  shrinkWrap: true,
+                                                  itemCount:
+                                                      _loanState.lenders.length,
+                                                  itemBuilder: (_, index) =>
+                                                      GestureDetector(
+                                                    onTap: () {
+                                                      _loanState
+                                                          .onChangeItem(index);
+                                                    },
+                                                    child: SizedBox(
+                                                      height: 45,
+                                                      child: Container(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 24,
+                                                                top: 12,
+                                                                bottom: 12),
+                                                        child: Text(
+                                                          _loanState
+                                                              .lenders[index],
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .bodyMedium
+                                                              ?.copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  separatorBuilder:
+                                                      (context, index) {
+                                                    return const Divider(
+                                                      thickness: 1,
+                                                      color: Color(0xFFE5EBE8),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Center(
-                                  child: Text(
-                                    "Расчет займа",
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: null,
-                                  child: Icon(
-                                    Icons.folder_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Column(
-                                children: [
-                                  Card(
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: Card(
                                     color: const Color(0xFFF1F1F1),
                                     elevation: 0,
                                     shape: const RoundedRectangleBorder(
@@ -121,15 +248,16 @@ class _LoanPageState extends State<LoanPage> {
                                       child: SizedBox(
                                         height: 59,
                                         child: TextFormField(
-                                          controller: _lenderController,
+                                          controller: _amountLoanController,
+                                          keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                            labelText: 'Займодатель',
+                                            labelText: 'Сумма займа',
                                             border: InputBorder.none,
                                             labelStyle: Theme.of(context)
                                                 .primaryTextTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w500,
                                                   color:
                                                       const Color(0x4D0F3F15),
                                                 ),
@@ -154,519 +282,398 @@ class _LoanPageState extends State<LoanPage> {
                                       ),
                                     ),
                                   ),
-                                  Observer(
-                                    builder: (_) => Visibility(
-                                      visible: _loanState.lenders.isNotEmpty,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 12),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFF1F1F1),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(44),
-                                            ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: Card(
+                                    color: const Color(0xFFF1F1F1),
+                                    elevation: 0,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(44),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: SizedBox(
+                                        height: 59,
+                                        child: TextFormField(
+                                          controller: _termLoanController,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            labelText: 'Срок займа',
+                                            border: InputBorder.none,
+                                            labelStyle: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      const Color(0x4D0F3F15),
+                                                ),
                                           ),
-                                          padding: const EdgeInsets.all(8),
-                                          child: ConstrainedBox(
-                                            constraints: const BoxConstraints(
-                                                maxHeight: 180),
-                                            child: ListView.separated(
-                                              itemCount:
-                                                  _loanState.lenders.length,
-                                              itemBuilder: (_, index) =>
-                                                  GestureDetector(
-                                                onTap: () {
-                                                  _loanState
-                                                      .onChangeItem(index);
-                                                },
-                                                child: SizedBox(
-                                                  height: 45,
-                                                  child: Container(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 24,
-                                                            top: 12,
-                                                            bottom: 12),
-                                                    child: Text(
-                                                      _loanState.lenders[index],
-                                                      style: Theme.of(context)
-                                                          .primaryTextTheme
-                                                          .bodyMedium
-                                                          ?.copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0xFF0F3F15),
+                                              ),
+                                          onTapOutside: (event) {
+                                            FocusScopeNode currentFocus =
+                                                FocusScope.of(context);
+                                            if (!currentFocus.hasPrimaryFocus) {
+                                              currentFocus.unfocus();
+                                            }
+                                          },
+                                          onChanged: (value) =>
+                                              _loanState.searchLender(value),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: Card(
+                                    color: const Color(0xFFF1F1F1),
+                                    elevation: 0,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(44),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: SizedBox(
+                                        height: 59,
+                                        child: TextFormField(
+                                          controller:
+                                              _percentagePerDayController,
+                                          keyboardType: TextInputType.number,
+                                          decoration: InputDecoration(
+                                            labelText: 'Процент в день',
+                                            border: InputBorder.none,
+                                            labelStyle: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      const Color(0x4D0F3F15),
+                                                ),
+                                          ),
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0xFF0F3F15),
+                                              ),
+                                          onTapOutside: (event) {
+                                            FocusScopeNode currentFocus =
+                                                FocusScope.of(context);
+                                            if (!currentFocus.hasPrimaryFocus) {
+                                              currentFocus.unfocus();
+                                            }
+                                          },
+                                          onChanged: (value) =>
+                                              _loanState.searchLender(value),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Observer(
+                                    builder: (_) => Text(
+                                      _loanState.errorMessage,
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                              color: const Color(0xFFFF5959),
+                                              fontWeight: FontWeight.w400),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 20),
+                        child: Center(
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 60,
+                            child: ElevatedButton(
+                              onPressed: () => _loanState.doCalculations(
+                                  _amountLoanController.text,
+                                  _termLoanController.text,
+                                  _percentagePerDayController.text),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                  const Color(0xFFBCFE2B),
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    // Change your radius here
+                                    borderRadius: BorderRadius.circular(43),
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                "Рассчитать",
+                                style: TextStyle(
+                                  fontFamily: 'SFProText',
+                                  color: Color(0xFF0F3F15),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: Text(
+                                      "Итоговый расчет",
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "Итого к возврату:",
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      const Color(0xFF878987),
+                                                ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            height: 35,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFFF1F1F1),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(44),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Observer(
+                                                builder: (_) => Text(
+                                                  _loanState.totalToRefunded
+                                                      .round()
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: _loanState
+                                                                    .totalToRefunded ==
+                                                                0
+                                                            ? const Color(
+                                                                0x4D878987)
+                                                            : const Color(
+                                                                0xFF0F3F15),
+                                                      ),
                                                 ),
                                               ),
-                                              separatorBuilder:
-                                                  (context, index) {
-                                                return const Divider(
-                                                  thickness: 1,
-                                                  color: Color(0xFFE5EBE8),
-                                                );
-                                              },
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "Переплата:",
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      const Color(0xFF878987),
+                                                ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            height: 35,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFFF1F1F1),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(44),
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Observer(
+                                                builder: (_) => Text(
+                                                  _loanState.overpayment
+                                                      .round()
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: _loanState
+                                                                    .overpayment ==
+                                                                0
+                                                            ? const Color(
+                                                                0x4D878987)
+                                                            : const Color(
+                                                                0xFF0F3F15),
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Card(
-                                color: const Color(0xFFF1F1F1),
-                                elevation: 0,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(44),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: SizedBox(
-                                    height: 59,
-                                    child: TextFormField(
-                                      controller: _amountLoanController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: 'Сумма займа',
-                                        border: InputBorder.none,
-                                        labelStyle: Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              color: const Color(0x4D0F3F15),
-                                            ),
-                                      ),
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF0F3F15),
-                                          ),
-                                      onTapOutside: (event) {
-                                        FocusScopeNode currentFocus =
-                                            FocusScope.of(context);
-                                        if (!currentFocus.hasPrimaryFocus) {
-                                          currentFocus.unfocus();
-                                        }
-                                      },
-                                      onChanged: (value) =>
-                                          _loanState.searchLender(value),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Card(
-                                color: const Color(0xFFF1F1F1),
-                                elevation: 0,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(44),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: SizedBox(
-                                    height: 59,
-                                    child: TextFormField(
-                                      controller: _termLoanController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: 'Срок займа',
-                                        border: InputBorder.none,
-                                        labelStyle: Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              color: const Color(0x4D0F3F15),
-                                            ),
-                                      ),
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF0F3F15),
-                                          ),
-                                      onTapOutside: (event) {
-                                        FocusScopeNode currentFocus =
-                                            FocusScope.of(context);
-                                        if (!currentFocus.hasPrimaryFocus) {
-                                          currentFocus.unfocus();
-                                        }
-                                      },
-                                      onChanged: (value) =>
-                                          _loanState.searchLender(value),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Card(
-                                color: const Color(0xFFF1F1F1),
-                                elevation: 0,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(44),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: SizedBox(
-                                    height: 59,
-                                    child: TextFormField(
-                                      controller: _percentagePerDayController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        labelText: 'Процент в день',
-                                        border: InputBorder.none,
-                                        labelStyle: Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              color: const Color(0x4D0F3F15),
-                                            ),
-                                      ),
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: const Color(0xFF0F3F15),
-                                          ),
-                                      onTapOutside: (event) {
-                                        FocusScopeNode currentFocus =
-                                            FocusScope.of(context);
-                                        if (!currentFocus.hasPrimaryFocus) {
-                                          currentFocus.unfocus();
-                                        }
-                                      },
-                                      onChanged: (value) =>
-                                          _loanState.searchLender(value),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Observer(
-                                builder: (_) => Text(
-                                  _loanState.errorMessage,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: const Color(0xFFFF5959),
-                                          fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-                  child: Center(
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () => _loanState.doCalculations(
-                            _amountLoanController.text,
-                            _termLoanController.text,
-                            _percentagePerDayController.text),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color(0xFFBCFE2B),
+                Observer(
+                  builder: (_) => Visibility(
+                    visible: _loanState.calculations.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: const Color(0xFFE5EBE8),
                           ),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              // Change your radius here
-                              borderRadius: BorderRadius.circular(43),
-                            ),
+                          color: const Color(0xFFF1F1F1),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24),
                           ),
                         ),
-                        child: const Text(
-                          "Рассчитать",
-                          style: TextStyle(
-                            fontFamily: 'SFProText',
-                            color: Color(0xFF0F3F15),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 30),
-                                child: Text(
-                                  "Итоговый расчет",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 12),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Итого к возврату:",
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: const Color(0xFF878987),
-                                            ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        height: 35,
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xFFF1F1F1),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(44),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Observer(
-                                            builder: (_) => Text(
-                                              _loanState.totalToRefunded
-                                                  .round()
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: _loanState
-                                                                .totalToRefunded ==
-                                                            0
-                                                        ? const Color(
-                                                            0x4D878987)
-                                                        : const Color(
-                                                            0xFF0F3F15),
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 12),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Переплата:",
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: const Color(0xFF878987),
-                                            ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        height: 35,
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xFFF1F1F1),
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(44),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Observer(
-                                            builder: (_) => Text(
-                                              _loanState.overpayment
-                                                  .round()
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: _loanState
-                                                                .overpayment ==
-                                                            0
-                                                        ? const Color(
-                                                            0x4D878987)
-                                                        : const Color(
-                                                            0xFF0F3F15),
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Observer(
-                                builder: (_) => Visibility(
-                                  visible: _loanState.calculations.isNotEmpty,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 24),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 1,
-                                          color: const Color(0xFFE5EBE8),
-                                        ),
-                                        color: const Color(0xFFF1F1F1),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(24),
-                                          topRight: Radius.circular(24),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              height: 48,
-                                              decoration: const BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                    color: Color(0xFFE5EBE8),
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  _headerOfTableItem("День"),
-                                                  _headerOfTableItem(
-                                                      "Ежеднев.\nплатеж"),
-                                                  _headerOfTableItem("%"),
-                                                  _headerOfTableItem(
-                                                      "Основ.\nдолг"),
-                                                  _headerOfTableItem(
-                                                      "Остаток\nзадолж"),
-                                                ],
-                                              ),
-                                            ),
-                                            ListView.separated(
-                                              itemBuilder: (_, index) => Container(
-                                                height: 48,
-                                                decoration: const BoxDecoration(
-                                                  border: Border(
-                                                    bottom: BorderSide(
-                                                      color: Color(0xFFE5EBE8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    _contentOfTableItem(_loanState
-                                                        .calculations[index].day),
-                                                    _contentOfTableItem(_loanState
-                                                        .calculations[index]
-                                                        .dailyPayment),
-                                                    _contentOfTableItem(_loanState
-                                                        .calculations[index]
-                                                        .percent),
-                                                    _contentOfTableItem(_loanState
-                                                        .calculations[index]
-                                                        .mainDebt),
-                                                    _contentOfTableItem(_loanState
-                                                        .calculations[index]
-                                                        .outstandingBalance),
-                                                  ],
-                                                ),
-                                              ),
-                                              separatorBuilder: (context, index) {
-                                                return const Divider(
-                                                  thickness: 1,
-                                                  color: Color(0xFFE5EBE8),
-                                                );
-                                              },
-                                              itemCount:
-                                              _loanState.calculations.length,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                              Container(
+                                height: 48,
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Color(0xFFE5EBE8),
                                     ),
                                   ),
                                 ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    _headerOfTableItem("День"),
+                                    _headerOfTableItem("Ежеднев.\nплатеж"),
+                                    _headerOfTableItem("%"),
+                                    _headerOfTableItem("Основ.\nдолг"),
+                                    _headerOfTableItem("Остаток\nзадолж"),
+                                  ],
+                                ),
+                              ),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (_, index) => SizedBox(
+                                  height: 48,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      _contentOfTableItem(
+                                          _loanState.calculations[index].day),
+                                      _contentOfTableItem(_loanState
+                                          .calculations[index].dailyPayment),
+                                      _contentOfTableItem(_loanState
+                                          .calculations[index].percent),
+                                      _contentOfTableItem(_loanState
+                                          .calculations[index].mainDebt),
+                                      _contentOfTableItem(_loanState
+                                          .calculations[index]
+                                          .outstandingBalance),
+                                    ],
+                                  ),
+                                ),
+                                separatorBuilder: (context, index) {
+                                  return const Divider(
+                                    thickness: 1,
+                                    color: Color(0xFFE5EBE8),
+                                  );
+                                },
+                                itemCount: _loanState.calculations.length,
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -687,6 +694,7 @@ class _LoanPageState extends State<LoanPage> {
               color: const Color(0xFF878987),
             ),
         textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -701,7 +709,7 @@ class _LoanPageState extends State<LoanPage> {
             fontSize: 14,
             fontWeight: FontWeight.w500),
         maxLines: 1,
-        textAlign: TextAlign.start,
+        textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
       ),
     );
