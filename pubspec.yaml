@@ -94,6 +94,8 @@ flutter:
     - assets/images/main/ic_eighth.png
     - assets/images/calculator/ic_calc_loan.png
     - assets/images/calculator/ic_calc_burden.png
+    - assets/images/calendar/ic_delete.svg
+    - assets/images/calendar/ic_download.svg
 
   fonts:
     - family: SFProText

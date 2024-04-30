@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:microzaim/src/config/app_route.gr.dart';
-import 'package:microzaim/src/conventions/enum/calculations_type.dart';
 import 'package:microzaim/src/data/models/debt/debt_model.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
 
@@ -258,12 +257,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                               LoanModel model = box.getAt(index)!;
                               return GestureDetector(
                                 onTap: () {
-                                  AutoRouter.of(context).push(
-                                    CalculationsInfoRoute(
-                                        calculationsType: CalculationsType.loan,
-                                        title: model.lender,
-                                        loanModel: model),
-                                  );
+                                  AutoRouter.of(context)
+                                      .push(LoanInfoRoute(loanModel: model));
                                 },
                                 child: Container(
                                   height: 100,
@@ -363,13 +358,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                               DebtModel model = box.getAt(index)!;
                               return GestureDetector(
                                 onTap: () {
-                                  AutoRouter.of(context).push(
-                                    CalculationsInfoRoute(
-                                        calculationsType:
-                                            CalculationsType.debtBurden,
-                                        title: "Расчет ${index + 1}",
-                                        debtModel: model),
-                                  );
+                                  AutoRouter.of(context).push(DebtInfoRoute(
+                                      index: index, debtModel: model));
                                 },
                                 child: Container(
                                   height: 100,

@@ -19,4 +19,6 @@ Future initHiveDatabase() async {
   Hive.registerAdapter(DebtModelAdapter());
   await Hive.openBox<LoanModel>('loan_box');
   await Hive.openBox<DebtModel>('debt_box');
+  await Hive.openBox<LoanModel>('import_loan');
+  await Hive.openBox<DebtModel>('import_debt');
 }

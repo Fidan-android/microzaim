@@ -2,7 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:microzaim/src/presentation/article/article_for_kazakhstan_page.dart';
 import 'package:microzaim/src/presentation/article/article_for_russia_page.dart';
 import 'package:microzaim/src/presentation/article/article_page.dart';
-import 'package:microzaim/src/presentation/calculations/calculations_info_page.dart';
+import 'package:microzaim/src/presentation/calculations/debt_info_page.dart';
+import 'package:microzaim/src/presentation/calculations/loan_info_page.dart';
 import 'package:microzaim/src/presentation/debt_burden/debt_burden_page.dart';
 import 'package:microzaim/src/presentation/home.page.dart';
 import 'package:microzaim/src/presentation/loan/loan_page.dart';
@@ -24,7 +25,8 @@ import 'app_route.gr.dart';
     AutoRoute(page: SubPage),
     AutoRoute(page: LoanPage),
     AutoRoute(page: DebtBurdenPage),
-    AutoRoute(page: CalculationsInfoPage),
+    AutoRoute(page: LoanInfoPage),
+    AutoRoute(page: DebtInfoPage),
   ],
 )
 class $NavigationRouter {}
