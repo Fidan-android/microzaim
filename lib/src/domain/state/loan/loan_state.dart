@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:microzaim/src/data/models/calculation/calculation_model.dart';
+import 'package:microzaim/src/data/models/loan/loan_model.dart';
 import 'package:microzaim/src/data/repository/lender_repository.dart';
-import 'package:microzaim/src/domain/models/calculation_model/calculation_model.dart';
+import 'package:microzaim/src/data/repository/loan_repository.dart';
 import 'package:mobx/mobx.dart';
 
 part 'loan_state.g.dart';
@@ -7,9 +10,10 @@ part 'loan_state.g.dart';
 class LoanState = LoanStateBase with _$LoanState;
 
 abstract class LoanStateBase with Store {
-  LoanStateBase(this._lenderRepository);
+  LoanStateBase(this._lenderRepository, this._loanRepository);
 
   final LenderRepository _lenderRepository;
+  final LoanRepository _loanRepository;
 
   @observable
   ObservableList<String> lenders = ObservableList.of([]);
@@ -29,6 +33,7 @@ abstract class LoanStateBase with Store {
 
   @action
   void onChangeItem(int index) {
+    selectedLender = "";
     selectedLender = lenders[index];
     lenders.clear();
   }
@@ -48,6 +53,7 @@ abstract class LoanStateBase with Store {
   @action
   void doCalculations(
       String amountLoan, String termLoan, String percentagePerDay) {
+    debugPrint(amountLoan);
     if (selectedLender.isEmpty ||
         amountLoan.isEmpty ||
         termLoan.isEmpty ||
@@ -74,5 +80,24 @@ abstract class LoanStateBase with Store {
                   (totalToRefunded / double.parse(termLoan)).round() * i)
               .round()));
     }
+  }
+
+  @observable
+  bool isSaved = false;
+
+  @action
+  void saveCalculation() {
+    if (selectedLender.isEmpty || calculations.isEmpty) {
+      errorMessage = "Вы не выполнили расчеты";
+      return;
+    }
+
+    _loanRepository
+        .saveLoan(LoanModel(
+            lender: selectedLender,
+            totalToRefunded: totalToRefunded,
+            overpayment: overpayment,
+            calculations: calculations))
+        .then((value) => isSaved = value);
   }
 }

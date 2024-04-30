@@ -105,6 +105,22 @@ mixin _$LoanState on LoanStateBase, Store {
     });
   }
 
+  late final _$isSavedAtom =
+      Atom(name: 'LoanStateBase.isSaved', context: context);
+
+  @override
+  bool get isSaved {
+    _$isSavedAtom.reportRead();
+    return super.isSaved;
+  }
+
+  @override
+  set isSaved(bool value) {
+    _$isSavedAtom.reportWrite(value, super.isSaved, () {
+      super.isSaved = value;
+    });
+  }
+
   late final _$LoanStateBaseActionController =
       ActionController(name: 'LoanStateBase', context: context);
 
@@ -143,6 +159,17 @@ mixin _$LoanState on LoanStateBase, Store {
   }
 
   @override
+  void saveCalculation() {
+    final _$actionInfo = _$LoanStateBaseActionController.startAction(
+        name: 'LoanStateBase.saveCalculation');
+    try {
+      return super.saveCalculation();
+    } finally {
+      _$LoanStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 lenders: ${lenders},
@@ -150,7 +177,8 @@ selectedLender: ${selectedLender},
 totalToRefunded: ${totalToRefunded},
 overpayment: ${overpayment},
 errorMessage: ${errorMessage},
-calculations: ${calculations}
+calculations: ${calculations},
+isSaved: ${isSaved}
     ''';
   }
 }

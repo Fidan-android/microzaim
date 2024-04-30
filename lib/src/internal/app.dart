@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:microzaim/src/data/repository/debt_repository.dart';
 import 'package:microzaim/src/data/repository/lender_repository.dart';
+import 'package:microzaim/src/data/repository/loan_repository.dart';
 import 'package:microzaim/src/domain/state/home/home_state.dart';
 import 'package:microzaim/src/domain/state/init/init_state.dart';
 import 'package:microzaim/src/domain/state/theme/theme_state.dart';
@@ -45,6 +47,8 @@ class _ApplicationPageState extends State<Application> {
                 ),
               ),
               Provider(create: (context) => LenderRepository()),
+              Provider(create: (context) => LoanRepository()),
+              Provider(create: (context) => DebtRepository()),
               Provider(
                 create: (_) => ThemeState(ThemeRepository())..getTheme(),
               ),

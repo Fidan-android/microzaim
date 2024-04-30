@@ -1,5 +1,7 @@
 enum SharedKeys {
   firstLaunch("first_launch", bool),
+  calculationsLoan("calculations_loan", List),
+  calculationsDebt("calculations_debt", List),
   appTheme("app_theme", String);
 
   const SharedKeys(this.key, this.type);

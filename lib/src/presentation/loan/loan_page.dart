@@ -3,9 +3,11 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:microzaim/src/data/repository/lender_repository.dart';
+import 'package:microzaim/src/data/repository/loan_repository.dart';
 import 'package:microzaim/src/domain/state/loan/loan_state.dart';
 import 'package:microzaim/src/presentation/template/internal_page_template.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class LoanPage extends StatefulWidget {
   const LoanPage({super.key});
@@ -15,23 +17,24 @@ class LoanPage extends StatefulWidget {
 }
 
 class _LoanPageState extends State<LoanPage> {
-  final TextEditingController _lenderController = TextEditingController();
   final TextEditingController _amountLoanController = TextEditingController();
   final TextEditingController _termLoanController = TextEditingController();
   final TextEditingController _percentagePerDayController =
       TextEditingController();
   final GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
-  final LoanState _loanState = LoanState(LenderRepository());
+  late LoanState _loanState;
   late List<ReactionDisposer> _disposers;
 
   @override
   void didChangeDependencies() {
+    _loanState = LoanState(
+        Provider.of<LenderRepository>(context, listen: false),
+        Provider.of<LoanRepository>(context, listen: false));
     _disposers = [
-      reaction((p0) => _loanState.selectedLender, (String lender) {
-        if (lender.isNotEmpty) {
-          setState(() {
-            _lenderController.text = lender;
-          });
+      reaction((_) => _loanState.isSaved, (bool isSaved) {
+        if (isSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Расчеты успешно сохранены")));
         }
       })
     ];
@@ -71,9 +74,330 @@ class _LoanPageState extends State<LoanPage> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Stack(
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 117),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Card(
+                                          color: const Color(0xFFF1F1F1),
+                                          elevation: 0,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(44),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: SizedBox(
+                                              height: 59,
+                                              child: TextFormField(
+                                                controller:
+                                                    _amountLoanController,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Сумма займа',
+                                                  border: InputBorder.none,
+                                                  labelStyle: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: const Color(
+                                                            0x4D0F3F15),
+                                                      ),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: const Color(
+                                                          0xFF0F3F15),
+                                                    ),
+                                                onTapOutside: (event) {
+                                                  FocusScopeNode currentFocus =
+                                                      FocusScope.of(context);
+                                                  if (!currentFocus
+                                                      .hasPrimaryFocus) {
+                                                    currentFocus.unfocus();
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Card(
+                                          color: const Color(0xFFF1F1F1),
+                                          elevation: 0,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(44),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: SizedBox(
+                                              height: 59,
+                                              child: TextFormField(
+                                                controller: _termLoanController,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Срок займа',
+                                                  border: InputBorder.none,
+                                                  labelStyle: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: const Color(
+                                                            0x4D0F3F15),
+                                                      ),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: const Color(
+                                                          0xFF0F3F15),
+                                                    ),
+                                                onTapOutside: (event) {
+                                                  FocusScopeNode currentFocus =
+                                                      FocusScope.of(context);
+                                                  if (!currentFocus
+                                                      .hasPrimaryFocus) {
+                                                    currentFocus.unfocus();
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Card(
+                                          color: const Color(0xFFF1F1F1),
+                                          elevation: 0,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(44),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: SizedBox(
+                                              height: 59,
+                                              child: TextFormField(
+                                                controller:
+                                                    _percentagePerDayController,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Процент в день',
+                                                  border: InputBorder.none,
+                                                  labelStyle: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: const Color(
+                                                            0x4D0F3F15),
+                                                      ),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: const Color(
+                                                          0xFF0F3F15),
+                                                    ),
+                                                onTapOutside: (event) {
+                                                  FocusScopeNode currentFocus =
+                                                      FocusScope.of(context);
+                                                  if (!currentFocus
+                                                      .hasPrimaryFocus) {
+                                                    currentFocus.unfocus();
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Observer(
+                                          builder: (_) => Text(
+                                            _loanState.errorMessage,
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                    color:
+                                                        const Color(0xFFFF5959),
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 50),
+                                  child: Column(
+                                    children: [
+                                      Card(
+                                        color: const Color(0xFFF1F1F1),
+                                        elevation: 0,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(44),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: SizedBox(
+                                            height: 59,
+                                            child: Observer(
+                                              builder: (_) => TextFormField(
+                                                controller:
+                                                    TextEditingController(
+                                                        text: _loanState
+                                                            .selectedLender),
+                                                decoration: InputDecoration(
+                                                  labelText: 'Займодатель',
+                                                  border: InputBorder.none,
+                                                  labelStyle: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .bodyMedium
+                                                      ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: const Color(
+                                                            0x4D0F3F15),
+                                                      ),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .primaryTextTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: const Color(
+                                                          0xFF0F3F15),
+                                                    ),
+                                                onChanged: (value) => _loanState
+                                                    .searchLender(value),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Observer(
+                                        builder: (_) => Visibility(
+                                          visible:
+                                              _loanState.lenders.isNotEmpty,
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 12),
+                                            child: Card(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      side: BorderSide(
+                                                          color: Color(
+                                                              0xFFE5EBE8)),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(44),
+                                                      )),
+                                              color: const Color(0xFFF1F1F1),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: ConstrainedBox(
+                                                  constraints:
+                                                      const BoxConstraints(
+                                                          maxHeight: 180),
+                                                  child: ListView.separated(
+                                                    shrinkWrap: true,
+                                                    itemCount: _loanState
+                                                        .lenders.length,
+                                                    itemBuilder: (_, index) =>
+                                                        GestureDetector(
+                                                      onTap: () {
+                                                        _loanState.onChangeItem(
+                                                            index);
+                                                      },
+                                                      child: SizedBox(
+                                                        height: 45,
+                                                        child: Container(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 24,
+                                                                  top: 12,
+                                                                  bottom: 12),
+                                                          child: Text(
+                                                            _loanState
+                                                                .lenders[index],
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .bodyMedium
+                                                                ?.copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    separatorBuilder:
+                                                        (context, index) {
+                                                      return const Divider(
+                                                        thickness: 1,
+                                                        color:
+                                                            Color(0xFFE5EBE8),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -97,309 +421,15 @@ class _LoanPageState extends State<LoanPage> {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: null,
+                                      onTap: () {
+                                        _loanState.saveCalculation();
+                                      },
                                       child: Icon(
                                         Icons.folder_outlined,
                                         color: Theme.of(context).primaryColor,
                                       ),
                                     ),
                                   ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: Column(
-                                    children: [
-                                      Card(
-                                        color: const Color(0xFFF1F1F1),
-                                        elevation: 0,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(44),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: SizedBox(
-                                            height: 59,
-                                            child: TextFormField(
-                                              controller: _lenderController,
-                                              decoration: InputDecoration(
-                                                labelText: 'Займодатель',
-                                                border: InputBorder.none,
-                                                labelStyle: Theme.of(context)
-                                                    .primaryTextTheme
-                                                    .bodyMedium
-                                                    ?.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: const Color(
-                                                          0x4D0F3F15),
-                                                    ),
-                                              ),
-                                              style: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    color:
-                                                        const Color(0xFF0F3F15),
-                                                  ),
-                                              onTapOutside: (event) {
-                                                FocusScopeNode currentFocus =
-                                                    FocusScope.of(context);
-                                                if (!currentFocus
-                                                    .hasPrimaryFocus) {
-                                                  currentFocus.unfocus();
-                                                }
-                                              },
-                                              onChanged: (value) => _loanState
-                                                  .searchLender(value),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Observer(
-                                        builder: (_) => Visibility(
-                                          visible:
-                                              _loanState.lenders.isNotEmpty,
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 12),
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                color: Color(0xFFF1F1F1),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(44),
-                                                ),
-                                              ),
-                                              padding: const EdgeInsets.all(8),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                        maxHeight: 180),
-                                                child: ListView.separated(
-                                                  shrinkWrap: true,
-                                                  itemCount:
-                                                      _loanState.lenders.length,
-                                                  itemBuilder: (_, index) =>
-                                                      GestureDetector(
-                                                    onTap: () {
-                                                      _loanState
-                                                          .onChangeItem(index);
-                                                    },
-                                                    child: SizedBox(
-                                                      height: 45,
-                                                      child: Container(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                left: 24,
-                                                                top: 12,
-                                                                bottom: 12),
-                                                        child: Text(
-                                                          _loanState
-                                                              .lenders[index],
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .bodyMedium
-                                                              ?.copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  separatorBuilder:
-                                                      (context, index) {
-                                                    return const Divider(
-                                                      thickness: 1,
-                                                      color: Color(0xFFE5EBE8),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Card(
-                                    color: const Color(0xFFF1F1F1),
-                                    elevation: 0,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(44),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: SizedBox(
-                                        height: 59,
-                                        child: TextFormField(
-                                          controller: _amountLoanController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            labelText: 'Сумма займа',
-                                            border: InputBorder.none,
-                                            labelStyle: Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      const Color(0x4D0F3F15),
-                                                ),
-                                          ),
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: const Color(0xFF0F3F15),
-                                              ),
-                                          onTapOutside: (event) {
-                                            FocusScopeNode currentFocus =
-                                                FocusScope.of(context);
-                                            if (!currentFocus.hasPrimaryFocus) {
-                                              currentFocus.unfocus();
-                                            }
-                                          },
-                                          onChanged: (value) =>
-                                              _loanState.searchLender(value),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Card(
-                                    color: const Color(0xFFF1F1F1),
-                                    elevation: 0,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(44),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: SizedBox(
-                                        height: 59,
-                                        child: TextFormField(
-                                          controller: _termLoanController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            labelText: 'Срок займа',
-                                            border: InputBorder.none,
-                                            labelStyle: Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      const Color(0x4D0F3F15),
-                                                ),
-                                          ),
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: const Color(0xFF0F3F15),
-                                              ),
-                                          onTapOutside: (event) {
-                                            FocusScopeNode currentFocus =
-                                                FocusScope.of(context);
-                                            if (!currentFocus.hasPrimaryFocus) {
-                                              currentFocus.unfocus();
-                                            }
-                                          },
-                                          onChanged: (value) =>
-                                              _loanState.searchLender(value),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: Card(
-                                    color: const Color(0xFFF1F1F1),
-                                    elevation: 0,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(44),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: SizedBox(
-                                        height: 59,
-                                        child: TextFormField(
-                                          controller:
-                                              _percentagePerDayController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            labelText: 'Процент в день',
-                                            border: InputBorder.none,
-                                            labelStyle: Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      const Color(0x4D0F3F15),
-                                                ),
-                                          ),
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: const Color(0xFF0F3F15),
-                                              ),
-                                          onTapOutside: (event) {
-                                            FocusScopeNode currentFocus =
-                                                FocusScope.of(context);
-                                            if (!currentFocus.hasPrimaryFocus) {
-                                              currentFocus.unfocus();
-                                            }
-                                          },
-                                          onChanged: (value) =>
-                                              _loanState.searchLender(value),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: Observer(
-                                    builder: (_) => Text(
-                                      _loanState.errorMessage,
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              color: const Color(0xFFFF5959),
-                                              fontWeight: FontWeight.w400),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
@@ -425,7 +455,7 @@ class _LoanPageState extends State<LoanPage> {
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                     // Change your radius here
-                                    borderRadius: BorderRadius.circular(43),
+                                    borderRadius: BorderRadius.circular(44),
                                   ),
                                 ),
                               ),

@@ -38,6 +38,10 @@ dependencies:
   # Rename
   rename: ^3.0.1
 
+  # Local Database
+  hive: ^2.2.3
+  hive_flutter:
+
   # Others
   flutter_hooks: ^0.18.5+1
   get_it: ^7.2.0
@@ -55,6 +59,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  hive_generator: ^2.0.1
   auto_route_generator: ^5.0.3
   chopper_generator: ^6.0.0
   mobx_codegen: ^2.1.1
