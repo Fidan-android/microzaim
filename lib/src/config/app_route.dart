@@ -6,6 +6,7 @@ import 'package:microzaim/src/presentation/calculations/debt_info_page.dart';
 import 'package:microzaim/src/presentation/calculations/loan_info_page.dart';
 import 'package:microzaim/src/presentation/debt_burden/debt_burden_page.dart';
 import 'package:microzaim/src/presentation/home.page.dart';
+import 'package:microzaim/src/presentation/import/import_page.dart';
 import 'package:microzaim/src/presentation/loan/loan_page.dart';
 import 'package:microzaim/src/presentation/sub/sub_page.dart';
 import 'package:microzaim/src/presentation/welcome/welcome.dart';
@@ -27,6 +28,7 @@ import 'app_route.gr.dart';
     AutoRoute(page: DebtBurdenPage),
     AutoRoute(page: LoanInfoPage),
     AutoRoute(page: DebtInfoPage),
+    AutoRoute(page: ImportPage),
   ],
 )
 class $NavigationRouter {}

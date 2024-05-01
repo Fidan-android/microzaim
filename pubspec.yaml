@@ -96,6 +96,8 @@ flutter:
     - assets/images/calculator/ic_calc_burden.png
     - assets/images/calendar/ic_delete.svg
     - assets/images/calendar/ic_download.svg
+    - assets/images/calendar/ic_left_arrow.svg
+    - assets/images/calendar/ic_forward_arrow.svg
 
   fonts:
     - family: SFProText
