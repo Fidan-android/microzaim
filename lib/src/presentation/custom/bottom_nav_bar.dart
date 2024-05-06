@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:microzaim/src/domain/state/home/home_state.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
@@ -28,6 +29,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           if (_homeState.currentIndex != index) {
+            if (index == 2) {
+              if (_homeState.checkSubscribe() == false) {
+                AutoRouter.of(context).pushNamed("/sub-page");
+                return;
+              }
+            }
             if (AutoRouter.of(context).canPop()) {
               AutoRouter.of(context).pop();
             }

@@ -9,10 +9,10 @@ class LoanModel {
   final String lender;
 
   @HiveField(1)
-  final double totalToRefunded;
+  final int totalToRefunded;
 
   @HiveField(2)
-  final double overpayment;
+  final int overpayment;
 
   @HiveField(3)
   final List<CalculationModel> calculations;

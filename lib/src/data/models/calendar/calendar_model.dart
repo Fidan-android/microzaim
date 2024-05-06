@@ -1,24 +1,19 @@
 import 'package:hive/hive.dart';
+import 'package:microzaim/src/data/models/day/day_model.dart';
 
 part 'calendar_model.g.dart';
 
 @HiveType(typeId: 4)
-class CalendarMode {
+class CalendarModel {
   @HiveField(0)
-  final DateTime dateTime;
-
-  @HiveField(3)
-  final double totalToRefunded;
+  int totalToRefunded;
 
   @HiveField(1)
-  final double payment;
+  final List<DayModel> days;
 
-  @HiveField(4)
-  final double balanceToBePaid;
+  // type = 0 - it's Loan, type = 1 it's Debt
+  @HiveField(2)
+  int type;
 
-  CalendarMode(
-      {required this.dateTime,
-      required this.totalToRefunded,
-      required this.payment,
-      required this.balanceToBePaid});
+  CalendarModel({required this.totalToRefunded, required this.days, this.type = 0});
 }

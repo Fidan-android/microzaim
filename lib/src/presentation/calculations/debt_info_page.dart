@@ -1,13 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:microzaim/src/data/models/debt/debt_model.dart';
+import 'package:microzaim/src/data/repository/import_repository.dart';
+import 'package:microzaim/src/domain/state/calculations/calculations_state.dart';
 import 'package:microzaim/src/presentation/template/internal_page_template.dart';
+import 'package:mobx/mobx.dart';
 
 class DebtInfoPage extends StatefulWidget {
-  const DebtInfoPage({Key? key, required this.index, required this.debtModel})
-      : super(key: key);
+  const DebtInfoPage({Key? key, required this.debtModel}) : super(key: key);
 
-  final int index;
   final DebtModel debtModel;
 
   @override
@@ -15,6 +16,31 @@ class DebtInfoPage extends StatefulWidget {
 }
 
 class _DebtInfoPageState extends State<DebtInfoPage> {
+  late CalculationsState _calculationsState;
+  late List<ReactionDisposer> _disposers;
+
+  @override
+  void didChangeDependencies() {
+    _calculationsState = CalculationsState(ImportRepository());
+    _disposers = [
+      reaction((_) => _calculationsState.isSaved, (bool isSaved) {
+        if (isSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Расчеты успешно сохранены")));
+        }
+      })
+    ];
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    for (var d in _disposers) {
+      d();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InternalPageTemplate(
@@ -37,12 +63,11 @@ class _DebtInfoPageState extends State<DebtInfoPage> {
                   ),
                   Center(
                     child: Text(
-                      "Расчет ${widget.index + 1}",
+                      widget.debtModel.title,
                       style: Theme.of(context)
                           .primaryTextTheme
                           .bodyMedium
-                          ?.copyWith(
-                          fontSize: 20, fontWeight: FontWeight.w600),
+                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                   ),
                   const SizedBox.shrink(),
@@ -254,7 +279,8 @@ class _DebtInfoPageState extends State<DebtInfoPage> {
                           width: double.infinity,
                           height: 59,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () => _calculationsState
+                                .saveDebtToImport(widget.debtModel),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateColor.resolveWith(
                                 (states) => const Color(0xFFBCFE2B),

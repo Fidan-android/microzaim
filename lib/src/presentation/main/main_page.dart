@@ -18,189 +18,192 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => AutoRouter.of(context)
-                      .push(const ArticleForRussiaRoute()),
-                  child: Card(
-                    elevation: 0,
-                    color: const Color(0xFFF1F1F1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: SizedBox(
-                      height: 190,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 8),
-                                child: Card(
-                                  color: Colors.white,
-                                  child: SizedBox(
-                                    width: 46,
-                                    height: 46,
-                                    child: Center(
-                                      child: Text(
-                                        '🇷🇺',
-                                        style: TextStyle(fontSize: 28),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => AutoRouter.of(context)
+                        .push(const ArticleForRussiaRoute()),
+                    child: Card(
+                      elevation: 0,
+                      color: const Color(0xFFF1F1F1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: SizedBox(
+                        height: 190,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Card(
+                                    color: Colors.white,
+                                    child: SizedBox(
+                                      width: 46,
+                                      height: 46,
+                                      child: Center(
+                                        child: Text(
+                                          '🇷🇺',
+                                          style: TextStyle(fontSize: 28),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
+                                Opacity(
+                                  opacity: 0.33,
+                                  child: SizedBox(
+                                    height: 90,
+                                    child: SvgPicture.asset(
+                                      "assets/images/main/ic_russian.svg",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 16),
+                              child: Text(
+                                "Сводка\nзаконодательства\nРФ",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "SFProText",
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
                               ),
-                              Opacity(
-                                opacity: 0.33,
-                                child: SizedBox(
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => AutoRouter.of(context)
+                        .pushNamed("/article-for-kazakhstan-page"),
+                    child: Card(
+                      elevation: 0,
+                      color: const Color(0xFFF1F1F1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: SizedBox(
+                        height: 190,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Card(
+                                    color: Colors.white,
+                                    child: SizedBox(
+                                      width: 46,
+                                      height: 46,
+                                      child: Center(
+                                        child: Text(
+                                          '🇰🇿',
+                                          style: TextStyle(fontSize: 28),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
                                   height: 90,
                                   child: SvgPicture.asset(
-                                    "assets/images/main/ic_russian.svg",
+                                    "assets/images/main/ic_kazakhstan.svg",
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 16),
-                            child: Text(
-                              "Сводка\nзаконодательства\nРФ",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: "SFProText",
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
+                              ],
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 16),
+                              child: Text(
+                                "Сводка\nзаконодательства\nКЗ",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "SFProText",
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => AutoRouter.of(context)
-                      .pushNamed("/article-for-kazakhstan-page"),
-                  child: Card(
-                    elevation: 0,
-                    color: const Color(0xFFF1F1F1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: SizedBox(
-                      height: 190,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 8),
-                                child: Card(
-                                  color: Colors.white,
-                                  child: SizedBox(
-                                    width: 46,
-                                    height: 46,
-                                    child: Center(
-                                      child: Text(
-                                        '🇰🇿',
-                                        style: TextStyle(fontSize: 28),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 90,
-                                child: SvgPicture.asset(
-                                  "assets/images/main/ic_kazakhstan.svg",
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 16),
-                            child: Text(
-                              "Сводка\nзаконодательства\nКЗ",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: "SFProText",
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_first.png",
-            titleOfArticle: "Можно ли не платить микрозайм законно",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 1)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_second.png",
-            titleOfArticle: "Что будет, если не платить микрозайм",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 2)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_third.png",
-            titleOfArticle: "Когда МФО нарушают закон",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 3)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_fourth.png",
-            titleOfArticle: "Как работает закон о банкротстве",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 4)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_fifth.png",
-            titleOfArticle: "Что делать с унаследованным займом",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 5)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_sixth.png",
-            titleOfArticle: "Истечение срока давности",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 6)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_seventh.png",
-            titleOfArticle: "Советы от юриста",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 7)),
-          ),
-          ArticleWidget(
-            imageOfArticle: "assets/images/main/ic_eighth.png",
-            titleOfArticle: "Мифы о неуплате по займам",
-            onTap: () => AutoRouter.of(context)
-                .push(ArticleRoute(numberOfArticle: 8)),
-          ),
-        ],
+              ],
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_first.png",
+              titleOfArticle: "Можно ли не платить микрозайм законно",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 1)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_second.png",
+              titleOfArticle: "Что будет, если не платить микрозайм",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 2)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_third.png",
+              titleOfArticle: "Когда МФО нарушают закон",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 3)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_fourth.png",
+              titleOfArticle: "Как работает закон о банкротстве",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 4)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_fifth.png",
+              titleOfArticle: "Что делать с унаследованным займом",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 5)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_sixth.png",
+              titleOfArticle: "Истечение срока давности",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 6)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_seventh.png",
+              titleOfArticle: "Советы от юриста",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 7)),
+            ),
+            ArticleWidget(
+              imageOfArticle: "assets/images/main/ic_eighth.png",
+              titleOfArticle: "Мифы о неуплате по займам",
+              onTap: () => AutoRouter.of(context)
+                  .push(ArticleRoute(numberOfArticle: 8)),
+            ),
+          ],
+        ),
       ),
     );
   }

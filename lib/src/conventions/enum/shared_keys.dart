@@ -1,5 +1,6 @@
 enum SharedKeys {
   firstLaunch("first_launch", bool),
+  subscribe("subscribe", bool),
   calculationsLoan("calculations_loan", List),
   calculationsDebt("calculations_debt", List),
   appTheme("app_theme", String);

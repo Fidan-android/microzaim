@@ -1,6 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:microzaim/src/data/repository/storage_repository.dart';
+import 'package:microzaim/src/domain/state/home/home_state.dart';
+import 'package:microzaim/src/domain/state/sub/sub_state.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 class SubPage extends StatefulWidget {
   const SubPage({super.key});
@@ -10,6 +15,34 @@ class SubPage extends StatefulWidget {
 }
 
 class _SubPageState extends State<SubPage> {
+  late HomeState _homeState;
+  late List<ReactionDisposer> _disposers;
+
+  @override
+  void didChangeDependencies() {
+    _homeState =
+        HomeState(Provider.of<StorageRepository>(context, listen: false));
+
+    _disposers = [
+      reaction((_) => _homeState.isSubscribed, (isSaved) {
+        if (isSaved == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Вы успешно оформили подписку")));
+          AutoRouter.of(context).pop();
+        }
+      })
+    ];
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    for (var d in _disposers) {
+      d();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,13 +95,14 @@ class _SubPageState extends State<SubPage> {
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       "Как работает\nваша подписка",
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .primaryTextTheme
                           .bodyLarge
                           ?.copyWith(
-                              fontSize: 36,
-                              color: const Color(0x993E3E3E),
-                              fontWeight: FontWeight.w600),
+                          fontSize: 36,
+                          color: const Color(0x993E3E3E),
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                   Padding(
@@ -132,19 +166,21 @@ class _SubPageState extends State<SubPage> {
                                   children: [
                                     Text(
                                       "Расчет займов",
-                                      style: Theme.of(context)
+                                      style: Theme
+                                          .of(context)
                                           .primaryTextTheme
                                           .bodyLarge
                                           ?.copyWith(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8),
                                       child: Text(
                                         "Расчитывайте выплаты ваших займов",
-                                        style: Theme.of(context)
+                                        style: Theme
+                                            .of(context)
                                             .primaryTextTheme
                                             .bodyMedium,
                                       ),
@@ -163,19 +199,21 @@ class _SubPageState extends State<SubPage> {
                                   children: [
                                     Text(
                                       "Календарь выплат",
-                                      style: Theme.of(context)
+                                      style: Theme
+                                          .of(context)
                                           .primaryTextTheme
                                           .bodyLarge
                                           ?.copyWith(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8),
                                       child: Text(
                                         "Записывайте все ваши займы",
-                                        style: Theme.of(context)
+                                        style: Theme
+                                            .of(context)
                                             .primaryTextTheme
                                             .bodyMedium,
                                       ),
@@ -202,11 +240,11 @@ class _SubPageState extends State<SubPage> {
                                 width: double.infinity,
                                 height: 60,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () => _homeState.doSubscribe(),
                                   style: ButtonStyle(
                                     backgroundColor:
-                                        MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xFFBCFE2B),
+                                    MaterialStateColor.resolveWith(
+                                          (states) => const Color(0xFFBCFE2B),
                                     ),
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
@@ -217,7 +255,8 @@ class _SubPageState extends State<SubPage> {
                                   ),
                                   child: Text(
                                     "\$0.99/в месяц",
-                                    style: Theme.of(context)
+                                    style: Theme
+                                        .of(context)
                                         .primaryTextTheme
                                         .bodyMedium
                                         ?.copyWith(fontWeight: FontWeight.w600),
@@ -230,13 +269,14 @@ class _SubPageState extends State<SubPage> {
                             padding: const EdgeInsets.only(top: 16),
                             child: Text(
                               "Восстановить покупку",
-                              style: Theme.of(context)
+                              style: Theme
+                                  .of(context)
                                   .primaryTextTheme
                                   .bodyMedium
                                   ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0x993E3E3E),
-                                  ),
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0x993E3E3E),
+                              ),
                             ),
                           ),
                         ],

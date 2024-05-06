@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:microzaim/src/config/app_route.gr.dart';
 import 'package:microzaim/src/data/models/debt/debt_model.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
+import 'package:microzaim/src/data/repository/calendar_repository.dart';
+import 'package:microzaim/src/domain/state/import/import_state.dart';
 import 'package:microzaim/src/presentation/template/internal_page_template.dart';
+import 'package:mobx/mobx.dart';
 
 class ImportPage extends StatefulWidget {
   const ImportPage({super.key});
@@ -15,12 +17,32 @@ class ImportPage extends StatefulWidget {
 }
 
 class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
+  late ImportState _importState;
   late TabController _calculationsTabController;
+  late List<ReactionDisposer> _disposers;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
+    _importState = ImportState(CalendarRepository());
     _calculationsTabController = TabController(length: 2, vsync: this);
-    super.initState();
+    _disposers = [
+      reaction((_) => _importState.isSaved, (bool isSaved) {
+        if (isSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Расчет импортирован в календарь")));
+          AutoRouter.of(context).pop();
+        }
+      })
+    ];
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    for (var d in _disposers) {
+      d();
+    }
+    super.dispose();
   }
 
   @override
@@ -28,11 +50,11 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
     return InternalPageTemplate(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 20),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -72,14 +94,18 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
                               if (box.values.isEmpty) {
                                 return Expanded(
                                   child: Center(
-                                    child: Text(
-                                      "Вы еще не добавляли расчеты в календарь",
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.w600),
-                                      textAlign: TextAlign.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, left: 16, right: 16),
+                                      child: Text(
+                                        "Вы еще не добавляли расчеты в календарь",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w600),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -90,72 +116,85 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
                                     itemBuilder: (context, index) {
                                       LoanModel model = box.getAt(index)!;
                                       return GestureDetector(
-                                        onTap: () {},
-                                        child: Container(
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFF1F1F1),
-                                            borderRadius:
-                                                BorderRadius.circular(32),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 16, horizontal: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      model.lender,
-                                                      style: Theme.of(context)
-                                                          .primaryTextTheme
-                                                          .bodyLarge
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16,
-                                                          ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8),
-                                                      child: Text(
-                                                        "Итого к возврату: ${model.totalToRefunded}",
+                                        onTap: () {
+                                          _importState
+                                              .chooseLoanToCalendar(model);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8, left: 16, right: 16),
+                                          child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFF1F1F1),
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16,
+                                                      horizontal: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        model.lender,
                                                         style: Theme.of(context)
                                                             .primaryTextTheme
-                                                            .bodySmall
+                                                            .bodyLarge
                                                             ?.copyWith(
-                                                              color: const Color(
-                                                                  0xB30F3F15),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 16,
                                                             ),
                                                       ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8),
-                                                      child: Text(
-                                                        "Переплата: ${model.overpayment}",
-                                                        style: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .bodySmall
-                                                            ?.copyWith(
-                                                              color: const Color(
-                                                                  0xB30F3F15),
-                                                            ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8),
+                                                        child: Text(
+                                                          "Итого к возврату: ${model.totalToRefunded}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .bodySmall
+                                                              ?.copyWith(
+                                                                color: const Color(
+                                                                    0xB30F3F15),
+                                                              ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SvgPicture.asset(
-                                                    "assets/images/main/ic_arrow_right.svg"),
-                                              ],
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8),
+                                                        child: Text(
+                                                          "Переплата: ${model.overpayment}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .bodySmall
+                                                              ?.copyWith(
+                                                                color: const Color(
+                                                                    0xB30F3F15),
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SvgPicture.asset(
+                                                      "assets/images/main/ic_arrow_right.svg"),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -177,14 +216,18 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
                               if (box.values.isEmpty) {
                                 return Expanded(
                                   child: Center(
-                                    child: Text(
-                                      "Вы еще не добавляли расчеты в календарь",
-                                      style: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.w600),
-                                      textAlign: TextAlign.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, left: 16, right: 16),
+                                      child: Text(
+                                        "Вы еще не добавляли расчеты в календарь",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w600),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -195,72 +238,85 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
                                     itemBuilder: (context, index) {
                                       DebtModel model = box.getAt(index)!;
                                       return GestureDetector(
-                                        onTap: () {},
-                                        child: Container(
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFF1F1F1),
-                                            borderRadius:
-                                                BorderRadius.circular(32),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 16, horizontal: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Расчет ${index + 1}",
-                                                      style: Theme.of(context)
-                                                          .primaryTextTheme
-                                                          .bodyLarge
-                                                          ?.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16,
-                                                          ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8),
-                                                      child: Text(
-                                                        "Платеж/мес: ${model.monthlyIncome}",
+                                        onTap: () {
+                                          _importState
+                                              .chooseDebtToCalendar(model);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8, left: 16, right: 16),
+                                          child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFF1F1F1),
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16,
+                                                      horizontal: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "Расчет ${index + 1}",
                                                         style: Theme.of(context)
                                                             .primaryTextTheme
-                                                            .bodySmall
+                                                            .bodyLarge
                                                             ?.copyWith(
-                                                              color: const Color(
-                                                                  0xB30F3F15),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 16,
                                                             ),
                                                       ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8),
-                                                      child: Text(
-                                                        "Долговая нагрузка: ${model.debtBurden}%",
-                                                        style: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .bodySmall
-                                                            ?.copyWith(
-                                                              color: const Color(
-                                                                  0xB30F3F15),
-                                                            ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8),
+                                                        child: Text(
+                                                          "Платеж/мес: ${model.monthlyIncome}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .bodySmall
+                                                              ?.copyWith(
+                                                                color: const Color(
+                                                                    0xB30F3F15),
+                                                              ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SvgPicture.asset(
-                                                    "assets/images/main/ic_arrow_right.svg"),
-                                              ],
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8),
+                                                        child: Text(
+                                                          "Долговая нагрузка: ${model.debtBurden}%",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .primaryTextTheme
+                                                              .bodySmall
+                                                              ?.copyWith(
+                                                                color: const Color(
+                                                                    0xB30F3F15),
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SvgPicture.asset(
+                                                      "assets/images/main/ic_arrow_right.svg"),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),

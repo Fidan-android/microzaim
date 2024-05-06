@@ -16,9 +16,17 @@ class DebtModel {
   @HiveField(3)
   final int monthlyIncome;
 
+  @HiveField(4)
+  final String title;
+
+  @HiveField(5)
+  final int countOfMonth;
+
   DebtModel(
       {required this.payment,
       required this.averageIncome,
       required this.debtBurden,
-      required this.monthlyIncome});
+      required this.monthlyIncome,
+      required this.title,
+      required this.countOfMonth});
 }

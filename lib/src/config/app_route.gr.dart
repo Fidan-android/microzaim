@@ -109,7 +109,6 @@ class NavigationRouter extends _i13.RootStackRouter {
         routeData: routeData,
         child: _i11.DebtInfoPage(
           key: args.key,
-          index: args.index,
           debtModel: args.debtModel,
         ),
       );
@@ -344,14 +343,12 @@ class LoanInfoRouteArgs {
 class DebtInfoRoute extends _i13.PageRouteInfo<DebtInfoRouteArgs> {
   DebtInfoRoute({
     _i14.Key? key,
-    required int index,
     required _i16.DebtModel debtModel,
   }) : super(
           DebtInfoRoute.name,
           path: '/debt-info-page',
           args: DebtInfoRouteArgs(
             key: key,
-            index: index,
             debtModel: debtModel,
           ),
         );
@@ -362,19 +359,16 @@ class DebtInfoRoute extends _i13.PageRouteInfo<DebtInfoRouteArgs> {
 class DebtInfoRouteArgs {
   const DebtInfoRouteArgs({
     this.key,
-    required this.index,
     required this.debtModel,
   });
 
   final _i14.Key? key;
 
-  final int index;
-
   final _i16.DebtModel debtModel;
 
   @override
   String toString() {
-    return 'DebtInfoRouteArgs{key: $key, index: $index, debtModel: $debtModel}';
+    return 'DebtInfoRouteArgs{key: $key, debtModel: $debtModel}';
   }
 }
 

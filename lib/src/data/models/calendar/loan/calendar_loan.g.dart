@@ -1,41 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'loan_model.dart';
+part of 'calendar_loan.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LoanModelAdapter extends TypeAdapter<LoanModel> {
+class CalendarLoanAdapter extends TypeAdapter<CalendarLoan> {
   @override
-  final int typeId = 1;
+  final int typeId = 6;
 
   @override
-  LoanModel read(BinaryReader reader) {
+  CalendarLoan read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LoanModel(
-      lender: fields[0] as String,
-      totalToRefunded: fields[1] as int,
-      overpayment: fields[2] as int,
-      calculations: (fields[3] as List).cast<CalculationModel>(),
+    return CalendarLoan(
+      totalToRefunded: fields[0] as int,
+      days: (fields[1] as List).cast<DayModel>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, LoanModel obj) {
+  void write(BinaryWriter writer, CalendarLoan obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.lender)
-      ..writeByte(1)
-      ..write(obj.totalToRefunded)
       ..writeByte(2)
-      ..write(obj.overpayment)
-      ..writeByte(3)
-      ..write(obj.calculations);
+      ..writeByte(0)
+      ..write(obj.totalToRefunded)
+      ..writeByte(1)
+      ..write(obj.days);
   }
 
   @override
@@ -44,7 +38,7 @@ class LoanModelAdapter extends TypeAdapter<LoanModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LoanModelAdapter &&
+      other is CalendarLoanAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

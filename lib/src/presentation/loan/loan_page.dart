@@ -17,6 +17,8 @@ class LoanPage extends StatefulWidget {
 }
 
 class _LoanPageState extends State<LoanPage> {
+  final TextEditingController _lenderEditingController =
+      TextEditingController();
   final TextEditingController _amountLoanController = TextEditingController();
   final TextEditingController _termLoanController = TextEditingController();
   final TextEditingController _percentagePerDayController =
@@ -36,7 +38,13 @@ class _LoanPageState extends State<LoanPage> {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Расчеты успешно сохранены")));
         }
-      })
+      }),
+      /*reaction((_) => _loanState.selectedLender, (value) {
+        debugPrint("lender from reaction: $value");
+        setState(() {
+          _lenderEditingController.text = value;
+        });
+      })*/
     ];
     super.didChangeDependencies();
   }
@@ -281,37 +289,32 @@ class _LoanPageState extends State<LoanPage> {
                                               horizontal: 20),
                                           child: SizedBox(
                                             height: 59,
-                                            child: Observer(
-                                              builder: (_) => TextFormField(
-                                                controller:
-                                                    TextEditingController(
-                                                        text: _loanState
-                                                            .selectedLender),
-                                                decoration: InputDecoration(
-                                                  labelText: 'Займодатель',
-                                                  border: InputBorder.none,
-                                                  labelStyle: Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .bodyMedium
-                                                      ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: const Color(
-                                                            0x4D0F3F15),
-                                                      ),
-                                                ),
-                                                style: Theme.of(context)
+                                            child: TextFormField(
+                                              controller:
+                                                  _lenderEditingController,
+                                              decoration: InputDecoration(
+                                                labelText: 'Займодатель',
+                                                border: InputBorder.none,
+                                                labelStyle: Theme.of(context)
                                                     .primaryTextTheme
                                                     .bodyMedium
                                                     ?.copyWith(
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: const Color(
-                                                          0xFF0F3F15),
+                                                          0x4D0F3F15),
                                                     ),
-                                                onChanged: (value) => _loanState
-                                                    .searchLender(value),
                                               ),
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    color:
+                                                        const Color(0xFF0F3F15),
+                                                  ),
+                                              onChanged: (value) => _loanState
+                                                  .searchLender(value),
                                             ),
                                           ),
                                         ),
@@ -348,6 +351,13 @@ class _LoanPageState extends State<LoanPage> {
                                                     itemBuilder: (_, index) =>
                                                         GestureDetector(
                                                       onTap: () {
+                                                        setState(() {
+                                                          _lenderEditingController
+                                                                  .text =
+                                                              _loanState
+                                                                      .lenders[
+                                                                  index];
+                                                        });
                                                         _loanState.onChangeItem(
                                                             index);
                                                       },
@@ -422,7 +432,8 @@ class _LoanPageState extends State<LoanPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        _loanState.saveCalculation();
+                                        _loanState.saveCalculation(
+                                            _lenderEditingController.text);
                                       },
                                       child: Icon(
                                         Icons.folder_outlined,
@@ -445,6 +456,7 @@ class _LoanPageState extends State<LoanPage> {
                             height: 60,
                             child: ElevatedButton(
                               onPressed: () => _loanState.doCalculations(
+                                  _lenderEditingController.text,
                                   _amountLoanController.text,
                                   _termLoanController.text,
                                   _percentagePerDayController.text),

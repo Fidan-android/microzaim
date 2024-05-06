@@ -18,9 +18,6 @@ abstract class LoanStateBase with Store {
   @observable
   ObservableList<String> lenders = ObservableList.of([]);
 
-  @observable
-  String selectedLender = "";
-
   @action
   void searchLender(String query) {
     if (query.isNotEmpty) {
@@ -33,8 +30,6 @@ abstract class LoanStateBase with Store {
 
   @action
   void onChangeItem(int index) {
-    selectedLender = "";
-    selectedLender = lenders[index];
     lenders.clear();
   }
 
@@ -51,9 +46,13 @@ abstract class LoanStateBase with Store {
   ObservableList<CalculationModel> calculations = ObservableList.of([]);
 
   @action
-  void doCalculations(
-      String amountLoan, String termLoan, String percentagePerDay) {
-    debugPrint(amountLoan);
+  void doCalculations(String selectedLender, String amountLoan, String termLoan,
+      String percentagePerDay) {
+    debugPrint("lender: $selectedLender");
+    debugPrint("amountLoan: $amountLoan");
+    debugPrint("termLoan: $termLoan");
+    debugPrint("percentagePerDay: $percentagePerDay");
+
     if (selectedLender.isEmpty ||
         amountLoan.isEmpty ||
         termLoan.isEmpty ||
@@ -86,8 +85,8 @@ abstract class LoanStateBase with Store {
   bool isSaved = false;
 
   @action
-  void saveCalculation() {
-    if (selectedLender.isEmpty || calculations.isEmpty) {
+  void saveCalculation(String selectedLender) {
+    if (calculations.isEmpty) {
       errorMessage = "Вы не выполнили расчеты";
       return;
     }
@@ -95,8 +94,8 @@ abstract class LoanStateBase with Store {
     _loanRepository
         .saveLoan(LoanModel(
             lender: selectedLender,
-            totalToRefunded: totalToRefunded,
-            overpayment: overpayment,
+            totalToRefunded: totalToRefunded.ceil(),
+            overpayment: overpayment.ceil(),
             calculations: calculations))
         .then((value) => isSaved = value);
   }

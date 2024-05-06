@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Observer(
           builder: (_) => Padding(
-            padding: const EdgeInsets.only(top: 20, left: 16, right: 16),
+            padding: const EdgeInsets.only(top: 20),
             child: Column(
               children: [
                 Expanded(

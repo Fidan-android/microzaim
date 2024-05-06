@@ -53,6 +53,7 @@ dependencies:
   flutter_svg: ^2.0.3
   async: ^2.10.0
   connectivity_plus: ^3.0.3
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +96,7 @@ flutter:
     - assets/images/calculator/ic_calc_loan.png
     - assets/images/calculator/ic_calc_burden.png
     - assets/images/calendar/ic_delete.svg
+    - assets/images/calendar/ic_checked.svg
     - assets/images/calendar/ic_download.svg
     - assets/images/calendar/ic_left_arrow.svg
     - assets/images/calendar/ic_forward_arrow.svg

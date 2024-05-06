@@ -6,36 +6,33 @@ part of 'calendar_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CalendarModeAdapter extends TypeAdapter<CalendarMode> {
+class CalendarModelAdapter extends TypeAdapter<CalendarModel> {
   @override
   final int typeId = 4;
 
   @override
-  CalendarMode read(BinaryReader reader) {
+  CalendarModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CalendarMode(
-      dateTime: fields[0] as DateTime,
-      totalToRefunded: fields[3] as double,
-      payment: fields[1] as double,
-      balanceToBePaid: fields[4] as double,
+    return CalendarModel(
+      totalToRefunded: fields[0] as int,
+      days: (fields[1] as List).cast<DayModel>(),
+      type: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CalendarMode obj) {
+  void write(BinaryWriter writer, CalendarModel obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.dateTime)
       ..writeByte(3)
+      ..writeByte(0)
       ..write(obj.totalToRefunded)
       ..writeByte(1)
-      ..write(obj.payment)
-      ..writeByte(4)
-      ..write(obj.balanceToBePaid);
+      ..write(obj.days)
+      ..writeByte(2)
+      ..write(obj.type);
   }
 
   @override
@@ -44,7 +41,7 @@ class CalendarModeAdapter extends TypeAdapter<CalendarMode> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CalendarModeAdapter &&
+      other is CalendarModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

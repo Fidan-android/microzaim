@@ -9,8 +9,8 @@ class DebtRepository extends IDebtRepository {
   final _debtsBox = Hive.box<DebtModel>('debt_box');
 
   @override
-  Result<List<DebtModel>> getDebts() {
-    return Result.success(_debtsBox.values.toList());
+  List<DebtModel> getDebts() {
+    return _debtsBox.values.toList();
   }
 
   @override
@@ -20,8 +20,8 @@ class DebtRepository extends IDebtRepository {
   }
 
   @override
-  Future<Result<List<DebtModel>>> removeDebt(DebtModel model) async {
+  Future<List<DebtModel>> removeDebt(DebtModel model) async {
     await _debtsBox.delete(model);
-    return Result.success(_debtsBox.values.toList());
+    return getDebts();
   }
 }

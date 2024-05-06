@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
+import 'package:microzaim/src/data/repository/import_repository.dart';
+import 'package:microzaim/src/domain/state/calculations/calculations_state.dart';
 import 'package:microzaim/src/presentation/template/internal_page_template.dart';
+import 'package:mobx/mobx.dart';
 
 class LoanInfoPage extends StatefulWidget {
   const LoanInfoPage({Key? key, required this.loanModel}) : super(key: key);
@@ -13,6 +16,31 @@ class LoanInfoPage extends StatefulWidget {
 }
 
 class _LoanInfoPageState extends State<LoanInfoPage> {
+  late CalculationsState _calculationsState;
+  late List<ReactionDisposer> _disposers;
+
+  @override
+  void didChangeDependencies() {
+    _calculationsState = CalculationsState(ImportRepository());
+    _disposers = [
+      reaction((_) => _calculationsState.isSaved, (bool isSaved) {
+        if (isSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Расчеты успешно сохранены")));
+        }
+      })
+    ];
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    for (var d in _disposers) {
+      d();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InternalPageTemplate(
@@ -40,8 +68,7 @@ class _LoanInfoPageState extends State<LoanInfoPage> {
                             .primaryTextTheme
                             .bodyMedium
                             ?.copyWith(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600),
+                                fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                     ),
                     const SizedBox.shrink(),
@@ -229,7 +256,8 @@ class _LoanInfoPageState extends State<LoanInfoPage> {
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          _calculationsState.saveLoanToImport(widget.loanModel),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith(
                           (states) => const Color(0xFFBCFE2B),

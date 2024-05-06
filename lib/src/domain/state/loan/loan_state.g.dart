@@ -25,22 +25,6 @@ mixin _$LoanState on LoanStateBase, Store {
     });
   }
 
-  late final _$selectedLenderAtom =
-      Atom(name: 'LoanStateBase.selectedLender', context: context);
-
-  @override
-  String get selectedLender {
-    _$selectedLenderAtom.reportRead();
-    return super.selectedLender;
-  }
-
-  @override
-  set selectedLender(String value) {
-    _$selectedLenderAtom.reportWrite(value, super.selectedLender, () {
-      super.selectedLender = value;
-    });
-  }
-
   late final _$totalToRefundedAtom =
       Atom(name: 'LoanStateBase.totalToRefunded', context: context);
 
@@ -147,23 +131,24 @@ mixin _$LoanState on LoanStateBase, Store {
   }
 
   @override
-  void doCalculations(
-      String amountLoan, String termLoan, String percentagePerDay) {
+  void doCalculations(String selectedLender, String amountLoan, String termLoan,
+      String percentagePerDay) {
     final _$actionInfo = _$LoanStateBaseActionController.startAction(
         name: 'LoanStateBase.doCalculations');
     try {
-      return super.doCalculations(amountLoan, termLoan, percentagePerDay);
+      return super.doCalculations(
+          selectedLender, amountLoan, termLoan, percentagePerDay);
     } finally {
       _$LoanStateBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void saveCalculation() {
+  void saveCalculation(String selectedLender) {
     final _$actionInfo = _$LoanStateBaseActionController.startAction(
         name: 'LoanStateBase.saveCalculation');
     try {
-      return super.saveCalculation();
+      return super.saveCalculation(selectedLender);
     } finally {
       _$LoanStateBaseActionController.endAction(_$actionInfo);
     }
@@ -173,7 +158,6 @@ mixin _$LoanState on LoanStateBase, Store {
   String toString() {
     return '''
 lenders: ${lenders},
-selectedLender: ${selectedLender},
 totalToRefunded: ${totalToRefunded},
 overpayment: ${overpayment},
 errorMessage: ${errorMessage},
