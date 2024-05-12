@@ -81,6 +81,8 @@ flutter:
     - assets/images/ic_plus.svg
     - assets/images/welcome/ic_lines.svg
     - assets/images/welcome/ic_bank.png
+    - assets/images/welcome/ic_bank_2x.png
+    - assets/images/welcome/ic_book_2x.png
     - assets/images/welcome/ic_book.png
     - assets/images/main/ic_russian.svg
     - assets/images/main/ic_kazakhstan.svg

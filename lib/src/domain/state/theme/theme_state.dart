@@ -39,7 +39,7 @@ abstract class ThemeStateBase with Store {
               color: Color(0xFF0F3F15),
               fontFamily: 'SFProText',
               fontSize: 20,
-              fontWeight: FontWeight.w500),
+              fontWeight: FontWeight.w600),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color(0xFFF8FEFB),

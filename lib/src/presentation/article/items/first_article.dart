@@ -32,8 +32,7 @@ class FirstArticleItem extends StatelessWidget {
             "Можно ли не платить микрозайм законно",
             style: Theme.of(context)
                 .primaryTextTheme
-                .bodyLarge
-                ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                .titleMedium,
           ),
         ),
         Padding(

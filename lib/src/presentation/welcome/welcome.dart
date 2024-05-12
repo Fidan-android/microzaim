@@ -18,23 +18,20 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: [
-            FirstPage(
-              nextStep: () {
-                setState(() {
-                  _currentIndex = 1;
-                });
-              },
-            ),
-            SecondPage(
-              onCloseWelcomePage: () {
-                AutoRouter.of(context).replaceNamed("/home-page");
-              },
-            ),
-          ][_currentIndex],
-        ),
+        child: [
+          FirstPage(
+            nextStep: () {
+              setState(() {
+                _currentIndex = 1;
+              });
+            },
+          ),
+          SecondPage(
+            onCloseWelcomePage: () {
+              AutoRouter.of(context).replaceNamed("/home-page");
+            },
+          ),
+        ][_currentIndex],
       ),
     );
   }

@@ -11,32 +11,30 @@ class BankView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Center(
-          child: SizedBox(
-            width: 280,
-            height: 280,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset("assets/images/welcome/ic_bank.png"),
+        Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Center(
+            child: SizedBox(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Image.asset("assets/images/welcome/ic_bank_2x.png"),
+              ),
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: 40),
-          child: Text(
-            "Мы не являемся кредитной организацией",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontFamily: "SFProText",
-                fontWeight: FontWeight.w500),
-            textAlign: TextAlign.center,
-          ),
+        const Text(
+          "Мы не являемся кредитной организацией",
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontFamily: "SFProText",
+              fontWeight: FontWeight.w500),
+          textAlign: TextAlign.center,
         ),
         const Padding(
-          padding: EdgeInsets.only(top: 8),
+          padding: EdgeInsets.only(top: 12),
           child: Text(
-            "Мы не осуществляем выдачу займов или кредитов пользователям нашего приложения",
+            "Мы не осуществляем выдачу займов\nили кредитов пользователям нашего приложения",
             style: TextStyle(
                 color: Colors.black, fontSize: 16, fontFamily: "SFProText"),
             textAlign: TextAlign.center,
@@ -47,7 +45,7 @@ class BankView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
+                padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
                 child: Center(
                   child: SizedBox(
                     width: double.infinity,
@@ -57,6 +55,12 @@ class BankView extends StatelessWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith(
                           (states) => const Color(0xFFBCFE2B),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            // Change your radius here
+                            borderRadius: BorderRadius.circular(44),
+                          ),
                         ),
                       ),
                       child: const Text(

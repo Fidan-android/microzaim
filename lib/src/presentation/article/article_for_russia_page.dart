@@ -2,10 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:microzaim/src/presentation/template/internal_page_template.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../domain/state/home/home_state.dart';
 
 class ArticleForRussiaPage extends StatefulWidget {
   const ArticleForRussiaPage({super.key});
@@ -15,11 +12,8 @@ class ArticleForRussiaPage extends StatefulWidget {
 }
 
 class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
-  late HomeState _homeState;
-
   @override
   void didChangeDependencies() {
-    _homeState = Provider.of<HomeState>(context, listen: false);
     super.didChangeDependencies();
   }
 
@@ -28,48 +22,49 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
     return InternalPageTemplate(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 24, right: 24, bottom: 12),
+          padding:
+              const EdgeInsets.only(top: 20, bottom: 12, left: 16, right: 16),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () => AutoRouter.of(context).pop(),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Theme.of(context).primaryColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => AutoRouter.of(context).pop(),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    ),
-                    Card(
-                      color: const Color(0xFFF1F1F1),
-                      child: SizedBox(
-                        width: 46,
-                        height: 46,
-                        child: Center(
-                          child: Text(
-                            "🇷🇺",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyLarge
-                                ?.copyWith(fontSize: 30),
+                      Card(
+                        color: const Color(0xFFF1F1F1),
+                        child: SizedBox(
+                          width: 46,
+                          height: 46,
+                          child: Center(
+                            child: Text(
+                              "🇷🇺",
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyLarge
+                                  ?.copyWith(fontSize: 30),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox.fromSize(size: const Size(20, 20)),
-                  ],
+                      SizedBox.fromSize(size: const Size(20, 20)),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Text(
                     "Сводка по законодательству России о микрозаймах, микрокредитах и займах онлайн",
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).primaryTextTheme.titleMedium,
                   ),
                 ),
                 Padding(
@@ -83,7 +78,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 8, right: 8),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     '1.\tФедеральный закон "О микрофинансовой деятельности и микрофинансовых '
                     'организациях" № 151-ФЗ от 2 июля 2010 года.\n\t\t- Устанавливает основы регулирования деятельности микрофинансовых организаций (МФО), включая требования к осуществлению '
@@ -91,11 +86,12 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(
+                            fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 8, right: 8),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     '2. \tФедеральный закон "О потребительском кредите (займе)" № 353-ФЗ от 21 '
                     'декабря 2013 года.\n\t\t\t- Регламентирует отношения, возникающие при'
@@ -104,7 +100,8 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(
+                            fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
@@ -118,7 +115,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 8, right: 8),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     '- \tЛицензирование микрофинансовых организаций:\tМФО обязаны получать лицензию '
                     'Центрального банка Российской Федерации для осуществления микрофинансовой '
@@ -138,7 +135,8 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(
+                            fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
@@ -152,7 +150,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 8, right: 8),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     '-\tСвоевременное исполнение обязательств:\tЗаемщики обязаны своевременно возвращать '
                     'заемные средства и выплачивать проценты в соответствии с условиями договора.'
@@ -161,7 +159,8 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(
+                            fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
@@ -175,7 +174,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 8, right: 8),
+                  padding: const EdgeInsets.only(top: 20),
                   child: RichText(
                     text: TextSpan(
                       children: [
@@ -192,7 +191,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                               .primaryTextTheme
                               .bodyMedium
                               ?.copyWith(
-                                  fontWeight: FontWeight.w400, wordSpacing: 8),
+                                  fontWeight: FontWeight.w400, wordSpacing: 12),
                         ),
                         TextSpan(
                           text: 'www.cbr.ru/fmp_check',
@@ -201,7 +200,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                               .bodyMedium
                               ?.copyWith(
                                   fontWeight: FontWeight.w400,
-                                  wordSpacing: 8,
+                                  wordSpacing: 12,
                                   decoration: TextDecoration.underline),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
@@ -217,7 +216,7 @@ class _ArticleForRussiaPageState extends State<ArticleForRussiaPage> {
                               .primaryTextTheme
                               .bodyMedium
                               ?.copyWith(
-                                  fontWeight: FontWeight.w400, wordSpacing: 8),
+                                  fontWeight: FontWeight.w400, wordSpacing: 12),
                         ),
                       ],
                     ),

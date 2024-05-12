@@ -47,44 +47,47 @@ class _SecondPageState extends State<SecondPage> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _currentIndex == 0
-                    ? const SizedBox.shrink()
-                    : GestureDetector(
-                        onTap: () {
-                          _pageController.animateToPage(0,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn);
-                        },
-                        child: const SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Color(0xFF0F3F15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _currentIndex == 0
+                      ? const SizedBox.shrink()
+                      : GestureDetector(
+                          onTap: () {
+                            _pageController.animateToPage(0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeIn);
+                          },
+                          child: const SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF0F3F15),
+                            ),
                           ),
                         ),
+                  const SizedBox.shrink(),
+                  GestureDetector(
+                    onTap: () {
+                      widget.onCloseWelcomePage();
+                    },
+                    child: const SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: Icon(
+                        Icons.close,
+                        size: 30,
+                        color: Color(0xFF0F3F15),
                       ),
-                const SizedBox.shrink(),
-                GestureDetector(
-                  onTap: () {
-                    widget.onCloseWelcomePage();
-                  },
-                  child: const SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: Icon(
-                      Icons.close,
-                      size: 30,
-                      color: Color(0xFF0F3F15),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
           Row(

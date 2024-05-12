@@ -11,39 +11,42 @@ class ArticleForKazakhstanPage extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 20, left: 24, right: 24, bottom: 12),
+              const EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 12),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () => AutoRouter.of(context).pop(),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Theme.of(context).primaryColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => AutoRouter.of(context).pop(),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    ),
-                    Card(
-                      color: const Color(0xFFF1F1F1),
-                      child: SizedBox(
-                        width: 46,
-                        height: 46,
-                        child: Center(
-                          child: Text(
-                            "🇰🇿",
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .bodyLarge
-                                ?.copyWith(fontSize: 30),
+                      Card(
+                        color: const Color(0xFFF1F1F1),
+                        child: SizedBox(
+                          width: 46,
+                          height: 46,
+                          child: Center(
+                            child: Text(
+                              "🇰🇿",
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .bodyLarge
+                                  ?.copyWith(fontSize: 30),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox.fromSize(size: const Size(20, 20)),
-                  ],
+                      SizedBox.fromSize(size: const Size(20, 20)),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
@@ -78,7 +81,7 @@ class ArticleForKazakhstanPage extends StatelessWidget {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
@@ -105,7 +108,7 @@ class ArticleForKazakhstanPage extends StatelessWidget {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
@@ -128,7 +131,7 @@ class ArticleForKazakhstanPage extends StatelessWidget {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
                 Padding(
@@ -151,7 +154,7 @@ class ArticleForKazakhstanPage extends StatelessWidget {
                     style: Theme.of(context)
                         .primaryTextTheme
                         .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 8),
+                        ?.copyWith(fontWeight: FontWeight.w400, wordSpacing: 12),
                   ),
                 ),
               ],

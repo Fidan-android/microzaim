@@ -21,32 +21,35 @@ class ArticlePage extends StatelessWidget {
     return InternalPageTemplate(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
+          padding: const EdgeInsets.only(top: 20, left: 16, right: 16),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () => AutoRouter.of(context).pop(),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Theme.of(context).primaryColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => AutoRouter.of(context).pop(),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    ),
-                    Center(
-                      child: Text(
-                        "Статья",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyLarge
-                            ?.copyWith(fontSize: 22),
+                      Center(
+                        child: Text(
+                          "Статья",
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .bodyLarge
+                              ?.copyWith(fontSize: 22),
+                        ),
                       ),
-                    ),
-                    SizedBox.fromSize(size: const Size(20, 20)),
-                  ],
+                      SizedBox.fromSize(size: const Size(20, 20)),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40),

@@ -11,6 +11,7 @@ class FirstPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.zero,
       width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,13 +32,15 @@ class FirstPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
-                  "* Не является кредитной организацией",
-                  style: TextStyle(fontSize: 14, fontFamily: "SFProText"),
+                const Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text(
+                    "* Не является кредитной организацией",
+                    style: TextStyle(fontSize: 14, fontFamily: "SFProText"),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12, left: 16, right: 16, bottom: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Center(
                     child: SizedBox(
                       width: double.infinity,
@@ -47,6 +50,12 @@ class FirstPage extends StatelessWidget {
                         style: ButtonStyle(
                           backgroundColor: MaterialStateColor.resolveWith(
                             (states) => const Color(0xFFBCFE2B),
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              // Change your radius here
+                              borderRadius: BorderRadius.circular(44),
+                            ),
                           ),
                         ),
                         child: const Text(
