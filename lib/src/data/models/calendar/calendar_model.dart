@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:microzaim/src/data/models/day/day_model.dart';
+import 'package:microzaim/src/data/models/month/month_model.dart';
 
 part 'calendar_model.g.dart';
 
@@ -9,11 +10,13 @@ class CalendarModel {
   int totalToRefunded;
 
   @HiveField(1)
-  final List<DayModel> days;
+  List<DayModel> days;
 
-  // type = 0 - it's Loan, type = 1 it's Debt
   @HiveField(2)
-  int type;
+  List<MonthModel> months;
 
-  CalendarModel({required this.totalToRefunded, required this.days, this.type = 0});
+  CalendarModel(
+      {required this.totalToRefunded,
+      this.days = const [],
+      this.months = const []});
 }

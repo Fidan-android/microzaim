@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:microzaim/src/data/models/debt/debt_model.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
 import 'package:microzaim/src/data/repository/calendar_repository.dart';
+import 'package:microzaim/src/data/repository/import_repository.dart';
 import 'package:microzaim/src/domain/state/import/import_state.dart';
 import 'package:microzaim/src/presentation/template/internal_page_template.dart';
 import 'package:mobx/mobx.dart';
@@ -23,7 +24,7 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
 
   @override
   void didChangeDependencies() {
-    _importState = ImportState(CalendarRepository());
+    _importState = ImportState(ImportRepository(), CalendarRepository());
     _calculationsTabController = TabController(length: 2, vsync: this);
     _disposers = [
       reaction((_) => _importState.isSaved, (bool isSaved) {

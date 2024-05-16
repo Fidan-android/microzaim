@@ -42,7 +42,6 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                     : Colors.transparent;
               },
             ),
-            indicatorPadding: const EdgeInsets.symmetric(horizontal: 8),
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(54),
               color: const Color(0xFFBCFE2B),
@@ -50,9 +49,9 @@ class _CalculatorsPageState extends State<CalculatorsPage>
             labelStyle: Theme.of(context)
                 .primaryTextTheme
                 .bodyMedium
-                ?.copyWith(fontWeight: FontWeight.w500),
+                ?.copyWith(fontWeight: FontWeight.w500, fontSize: 15),
             unselectedLabelStyle:
-                Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(
+                Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 15,
                       fontWeight: FontWeight.w500,
                       color: const Color(0x4D0F3F15),
                     ),

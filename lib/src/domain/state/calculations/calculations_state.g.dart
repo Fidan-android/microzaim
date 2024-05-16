@@ -13,13 +13,13 @@ mixin _$CalculationsState on CalculationsStateBase, Store {
       Atom(name: 'CalculationsStateBase.isSaved', context: context);
 
   @override
-  bool get isSaved {
+  bool? get isSaved {
     _$isSavedAtom.reportRead();
     return super.isSaved;
   }
 
   @override
-  set isSaved(bool value) {
+  set isSaved(bool? value) {
     _$isSavedAtom.reportWrite(value, super.isSaved, () {
       super.isSaved = value;
     });

@@ -11,7 +11,11 @@ abstract class IImportRepository {
 
   Future<bool> saveImportDebt(DebtModel model);
 
-  Future<Result<List<LoanModel>>> removeImportLoan(LoanModel model);
+  Future updateImportLoan(LoanModel model, bool isImported);
 
-  Future<Result<List<DebtModel>>> removeImportDebt(DebtModel model);
+  Future updateImportDebt(DebtModel model, bool isImported);
+
+  Future removeImportLoan(LoanModel model);
+
+  Future removeImportDebt(DebtModel model);
 }

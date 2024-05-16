@@ -1,9 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:microzaim/src/data/models/debt/debt_model.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
-import 'package:microzaim/src/domain/repository/i_debt_repository.dart';
 import 'package:microzaim/src/domain/repository/i_import_repository.dart';
-import 'package:microzaim/src/domain/repository/i_loan_repository.dart';
 import 'package:microzaim/src/helper/result.dart';
 
 class ImportRepository extends IImportRepository {
@@ -17,14 +15,17 @@ class ImportRepository extends IImportRepository {
 
   @override
   Future<bool> saveImportDebt(DebtModel model) async {
+    if (_importDebtBox.values.contains(model)) {
+      return false;
+    }
     await _importDebtBox.add(model);
     return true;
   }
 
   @override
-  Future<Result<List<DebtModel>>> removeImportDebt(DebtModel model) async {
-    await _importDebtBox.delete(model);
-    return Result.success(_importDebtBox.values.toList());
+  Future removeImportDebt(DebtModel model) async {
+    int index = _importDebtBox.values.toList().indexOf(model);
+    await _importDebtBox.deleteAt(index);
   }
 
   @override
@@ -33,14 +34,33 @@ class ImportRepository extends IImportRepository {
   }
 
   @override
-  Future<Result<List<LoanModel>>> removeImportLoan(LoanModel model) async {
-    await _importLoanBox.delete(model);
-    return Result.success(_importLoanBox.values.toList());
+  Future removeImportLoan(LoanModel model) async {
+    int index = _importLoanBox.values.toList().indexOf(model);
+    await _importLoanBox.deleteAt(index);
   }
 
   @override
   Future<bool> saveImportLoan(LoanModel model) async {
+    if (_importLoanBox.values.contains(model)) {
+      return false;
+    }
     await _importLoanBox.add(model);
     return true;
+  }
+
+  @override
+  Future updateImportDebt(DebtModel model, bool isImported) async {
+    int index = _importDebtBox.values.toList().indexOf(model);
+    await _importDebtBox.deleteAt(index);
+    model.imported = isImported;
+    await _importDebtBox.putAt(index, model);
+  }
+
+  @override
+  Future updateImportLoan(LoanModel model, bool isImported) async {
+    int index = _importLoanBox.values.toList().indexOf(model);
+    await _importLoanBox.deleteAt(index);
+    model.imported = isImported;
+    await _importLoanBox.putAt(index, model);
   }
 }

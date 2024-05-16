@@ -16,6 +16,9 @@ class LoanModel {
 
   @HiveField(3)
   final List<CalculationModel> calculations;
+  
+  @HiveField(4)
+  bool imported = false;
 
   LoanModel(
       {required this.lender,

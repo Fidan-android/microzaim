@@ -19,7 +19,7 @@ class CalendarModelAdapter extends TypeAdapter<CalendarModel> {
     return CalendarModel(
       totalToRefunded: fields[0] as int,
       days: (fields[1] as List).cast<DayModel>(),
-      type: fields[2] as int,
+      months: (fields[2] as List).cast<MonthModel>(),
     );
   }
 
@@ -32,7 +32,7 @@ class CalendarModelAdapter extends TypeAdapter<CalendarModel> {
       ..writeByte(1)
       ..write(obj.days)
       ..writeByte(2)
-      ..write(obj.type);
+      ..write(obj.months);
   }
 
   @override

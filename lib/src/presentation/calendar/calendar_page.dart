@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:microzaim/src/data/models/calendar/calendar_model.dart';
 import 'package:microzaim/src/data/models/day/day_model.dart';
+import 'package:microzaim/src/data/models/month/month_model.dart';
 import 'package:microzaim/src/data/repository/calendar_repository.dart';
 import 'package:microzaim/src/data/repository/storage_repository.dart';
 import 'package:microzaim/src/domain/state/calendar/calendar_state.dart';
@@ -89,10 +90,19 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                     );
                   },
-                  child: SvgPicture.asset(
-                    "assets/images/calendar/ic_delete.svg",
-                    colorFilter: const ColorFilter.mode(
-                        Color(0x26000000), BlendMode.srcIn),
+                  child: ValueListenableBuilder(
+                    valueListenable:
+                        Hive.box<CalendarModel>("calendar_box").listenable(),
+                    builder: (context, Box<CalendarModel> box, _) {
+                      return SvgPicture.asset(
+                        "assets/images/calendar/ic_delete.svg",
+                        colorFilter: ColorFilter.mode(
+                            box.values.isEmpty
+                                ? const Color(0x26000000)
+                                : const Color(0xFF000000),
+                            BlendMode.srcIn),
+                      );
+                    },
                   ),
                 ),
                 Text(
@@ -102,22 +112,13 @@ class _CalendarPageState extends State<CalendarPage> {
                       .bodyLarge
                       ?.copyWith(fontSize: 20),
                 ),
-                ValueListenableBuilder(
-                  valueListenable:
-                      Hive.box<CalendarModel>("calendar_box").listenable(),
-                  builder: (context, Box<CalendarModel> box, _) {
-                    return GestureDetector(
-                      onTap: box.values.isEmpty
-                          ? () =>
-                              AutoRouter.of(context).pushNamed("/import-page")
-                          : null,
-                      child: SvgPicture.asset(
-                        "assets/images/calendar/ic_download.svg",
-                        colorFilter: const ColorFilter.mode(
-                            Color(0xD90F3F15), BlendMode.srcIn),
-                      ),
-                    );
-                  },
+                GestureDetector(
+                  onTap: () => AutoRouter.of(context).pushNamed("/import-page"),
+                  child: SvgPicture.asset(
+                    "assets/images/calendar/ic_download.svg",
+                    colorFilter: const ColorFilter.mode(
+                        Color(0xD90F3F15), BlendMode.srcIn),
+                  ),
                 ),
               ],
             ),
@@ -236,25 +237,28 @@ class _CalendarPageState extends State<CalendarPage> {
                 );
               } else {
                 CalendarModel calendarModel = box.getAt(0)!;
-                if (calendarModel.type == 0) {
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16, bottom: 20),
-                      child: Observer(
-                        builder: (_) => ListView.builder(
-                          itemCount:
-                              months[_calendarState.currentDateTime.month]! + 1,
-                          itemBuilder: (context, index) {
-                            DateTime loopedDateTime = DateTime(
-                                _calendarState.currentDateTime.year,
-                                _calendarState.currentDateTime.month,
-                                index + 1);
-                            DayModel? dayModel = _findCurrentDayModel(
-                                loopedDateTime, calendarModel);
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Observer(
+                      builder: (_) => ListView.builder(
+                        itemCount: calendarModel.days.isNotEmpty &&
+                                calendarModel.months.isNotEmpty
+                            ? months[_calendarState.currentDateTime.month]! + 1
+                            : calendarModel.days.isNotEmpty &&
+                                    calendarModel.months.isEmpty
+                                ? months[_calendarState.currentDateTime.month]
+                                : 1,
+                        itemBuilder: (context, index) {
+                          DateTime loopedDateTime = DateTime(
+                              _calendarState.currentDateTime.year,
+                              _calendarState.currentDateTime.month,
+                              index + 1);
+                          DayModel? dayModel = _findCurrentDayModel(
+                              loopedDateTime, calendarModel);
 
-                            DayModel? lastPayment = _lastPaymentOfMonth(
-                                _calendarState.currentDateTime, calendarModel);
-
+                          if (calendarModel.days.isNotEmpty &&
+                              calendarModel.months.isNotEmpty) {
                             if (index <
                                 months[_calendarState.currentDateTime.month]!) {
                               return GestureDetector(
@@ -352,25 +356,150 @@ class _CalendarPageState extends State<CalendarPage> {
                               );
                             } else {
                               return Padding(
-                                padding: const EdgeInsets.only(top: 16),
+                                padding:
+                                    const EdgeInsets.only(top: 16, bottom: 20),
+                                child: Observer(
+                                  builder: (_) {
+                                    MonthModel? monthModel =
+                                        _lastPaymentOfMonth(
+                                            _calendarState.currentDateTime,
+                                            calendarModel);
+                                    return GestureDetector(
+                                      onTap: monthModel != null
+                                          ? () =>
+                                              _calendarState.markMonthlyPayment(
+                                                  calendarModel, monthModel)
+                                          : null,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Container(
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            color: monthModel?.isChecked == true
+                                                ? const Color(0x33BCFE2B)
+                                                : const Color(0xFFF1F1F1),
+                                            borderRadius:
+                                                BorderRadius.circular(32),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16, horizontal: 20),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      _dateTimeFormatter(
+                                                          _calendarState
+                                                              .currentDateTime),
+                                                      style: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .bodyMedium
+                                                          ?.copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 8),
+                                                      child: Text(
+                                                        "Ежедневный платеж: ${monthModel?.payment ?? 0}",
+                                                        style: Theme.of(context)
+                                                            .primaryTextTheme
+                                                            .bodySmall,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 8),
+                                                      child: Text(
+                                                        "Остаток к оплате: ${monthModel?.balanceToBePaid ?? 0}",
+                                                        style: Theme.of(context)
+                                                            .primaryTextTheme
+                                                            .bodySmall,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  width: 23,
+                                                  height: 23,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color:
+                                                        monthModel?.isChecked ==
+                                                                true
+                                                            ? const Color(
+                                                                0xD9BCFE2B)
+                                                            : Colors.white,
+                                                    border: Border.all(
+                                                      color: const Color(
+                                                          0xFFD3D3D3),
+                                                    ),
+                                                  ),
+                                                  child: Visibility(
+                                                    visible:
+                                                        monthModel?.isChecked ??
+                                                            false,
+                                                    child: SvgPicture.asset(
+                                                      "assets/images/calendar/ic_checked.svg",
+                                                      fit: BoxFit.scaleDown,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                          } else if (calendarModel.days.isNotEmpty &&
+                              calendarModel.months.isEmpty) {
+                            return GestureDetector(
+                              onTap: dayModel != null
+                                  ? () => _calendarState.markDailyPayment(
+                                      calendarModel, dayModel)
+                                  : null,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8),
                                 child: Container(
                                   height: 100,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFF1F1F1),
+                                    color: dayModel?.isChecked == true
+                                        ? const Color(0x33BCFE2B)
+                                        : const Color(0xFFF1F1F1),
                                     borderRadius: BorderRadius.circular(32),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 16, horizontal: 20),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              _dateTimeFormatter(_calendarState
-                                                  .currentDateTime),
+                                              convertDateTimeToString(
+                                                  index + 1,
+                                                  _calendarState
+                                                      .currentDateTime.month,
+                                                  _calendarState
+                                                      .currentDateTime.year),
                                               style: Theme.of(context)
                                                   .primaryTextTheme
                                                   .bodyMedium
@@ -382,8 +511,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                               padding:
                                                   const EdgeInsets.only(top: 8),
                                               child: Text(
-                                                lastPayment != null
-                                                    ? "Ежедневный платеж: ${lastPayment.payment}"
+                                                dayModel != null
+                                                    ? "Ежедневный платеж: ${dayModel.payment}"
                                                     : "Ежедневный платеж: 0",
                                                 style: Theme.of(context)
                                                     .primaryTextTheme
@@ -394,9 +523,9 @@ class _CalendarPageState extends State<CalendarPage> {
                                               padding:
                                                   const EdgeInsets.only(top: 8),
                                               child: Text(
-                                                lastPayment != null
-                                                    ? "Остаток: ${calendarModel.totalToRefunded}"
-                                                    : "Остаток: 0",
+                                                dayModel != null
+                                                    ? "Остаток к оплате: ${dayModel.balanceToBePaid}"
+                                                    : "Остаток к оплате: 0",
                                                 style: Theme.of(context)
                                                     .primaryTextTheme
                                                     .bodySmall,
@@ -404,111 +533,146 @@ class _CalendarPageState extends State<CalendarPage> {
                                             ),
                                           ],
                                         ),
+                                        Container(
+                                          width: 23,
+                                          height: 23,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: dayModel?.isChecked == true
+                                                ? const Color(0xD9BCFE2B)
+                                                : Colors.white,
+                                            border: Border.all(
+                                              color: const Color(0xFFD3D3D3),
+                                            ),
+                                          ),
+                                          child: Visibility(
+                                            visible:
+                                                dayModel?.isChecked ?? false,
+                                            child: SvgPicture.asset(
+                                              "assets/images/calendar/ic_checked.svg",
+                                              fit: BoxFit.scaleDown,
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              );
-                            }
-                          },
-                        ),
+                              ),
+                            );
+                          } else {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 16, bottom: 20),
+                              child: Observer(
+                                builder: (_) {
+                                  MonthModel? monthModel = _lastPaymentOfMonth(
+                                      _calendarState.currentDateTime,
+                                      calendarModel);
+                                  return GestureDetector(
+                                    onTap: monthModel != null
+                                        ? () =>
+                                            _calendarState.markMonthlyPayment(
+                                                calendarModel, monthModel)
+                                        : null,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 8),
+                                      child: Container(
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          color: monthModel?.isChecked == true
+                                              ? const Color(0x33BCFE2B)
+                                              : const Color(0xFFF1F1F1),
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16, horizontal: 20),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    _dateTimeFormatter(
+                                                        _calendarState
+                                                            .currentDateTime),
+                                                    style: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .bodyMedium
+                                                        ?.copyWith(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 8),
+                                                    child: Text(
+                                                      "Ежедневный платеж: ${monthModel?.payment ?? 0}",
+                                                      style: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .bodySmall,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 8),
+                                                    child: Text(
+                                                      "Остаток к оплате: ${monthModel?.balanceToBePaid ?? 0}",
+                                                      style: Theme.of(context)
+                                                          .primaryTextTheme
+                                                          .bodySmall,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: 23,
+                                                height: 23,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: monthModel
+                                                              ?.isChecked ==
+                                                          true
+                                                      ? const Color(0xD9BCFE2B)
+                                                      : Colors.white,
+                                                  border: Border.all(
+                                                    color:
+                                                        const Color(0xFFD3D3D3),
+                                                  ),
+                                                ),
+                                                child: Visibility(
+                                                  visible:
+                                                      monthModel?.isChecked ??
+                                                          false,
+                                                  child: SvgPicture.asset(
+                                                    "assets/images/calendar/ic_checked.svg",
+                                                    fit: BoxFit.scaleDown,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
-                  );
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 20),
-                    child: Observer(
-                      builder: (_) {
-                        DayModel? dayModel = _lastPaymentOfMonth(
-                            _calendarState.currentDateTime, calendarModel);
-                        return GestureDetector(
-                          onTap: dayModel != null
-                              ? () => _calendarState.markDailyPayment(
-                                  calendarModel, dayModel)
-                              : null,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: dayModel?.isChecked == true
-                                    ? const Color(0x33BCFE2B)
-                                    : const Color(0xFFF1F1F1),
-                                borderRadius: BorderRadius.circular(32),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _dateTimeFormatter(
-                                              _calendarState.currentDateTime),
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w500),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8),
-                                          child: Text(
-                                            "Ежедневный платеж: ${dayModel?.payment ?? 0}",
-                                            style: Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodySmall,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8),
-                                          child: Text(
-                                            "Остаток к оплате: ${dayModel?.balanceToBePaid ?? 0}",
-                                            style: Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodySmall,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: 23,
-                                      height: 23,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: dayModel?.isChecked == true
-                                            ? const Color(0xD9BCFE2B)
-                                            : Colors.white,
-                                        border: Border.all(
-                                          color: const Color(0xFFD3D3D3),
-                                        ),
-                                      ),
-                                      child: Visibility(
-                                        visible: dayModel?.isChecked ?? false,
-                                        child: SvgPicture.asset(
-                                          "assets/images/calendar/ic_checked.svg",
-                                          fit: BoxFit.scaleDown,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }
+                  ),
+                );
               }
             },
           ),
@@ -517,16 +681,16 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  DayModel? _lastPaymentOfMonth(
+  MonthModel? _lastPaymentOfMonth(
       DateTime dateTime, CalendarModel calendarModel) {
-    DayModel? dayModel;
-    for (var i = 0; i < calendarModel.days.length; i++) {
-      if (calendarModel.days[i].dateTime.year == dateTime.year &&
-          calendarModel.days[i].dateTime.month == dateTime.month) {
-        dayModel = calendarModel.days[i];
+    MonthModel? monthModel;
+    for (var i = 0; i < calendarModel.months.length; i++) {
+      if (calendarModel.months[i].dateTime.year == dateTime.year &&
+          calendarModel.months[i].dateTime.month == dateTime.month) {
+        monthModel = calendarModel.months[i];
       }
     }
-    return dayModel;
+    return monthModel;
   }
 
   DayModel? _findCurrentDayModel(

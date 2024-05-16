@@ -1,6 +1,7 @@
 import 'package:microzaim/src/conventions/enum/shared_keys.dart';
 import 'package:microzaim/src/data/models/calendar/calendar_model.dart';
 import 'package:microzaim/src/data/models/day/day_model.dart';
+import 'package:microzaim/src/data/models/month/month_model.dart';
 import 'package:microzaim/src/data/repository/calendar_repository.dart';
 import 'package:microzaim/src/data/repository/storage_repository.dart';
 import 'package:mobx/mobx.dart';
@@ -47,13 +48,30 @@ abstract class CalendarStateBase with Store {
   }
 
   void markDailyPayment(CalendarModel calendarModel, DayModel dayModel) {
-    calendarModel.days[calendarModel.days.indexOf(dayModel)].isChecked =
-        !calendarModel.days[calendarModel.days.indexOf(dayModel)].isChecked;
-    if (calendarModel.days[calendarModel.days.indexOf(dayModel)].isChecked) {
-      calendarModel.totalToRefunded -= dayModel.payment;
-    } else {
-      calendarModel.totalToRefunded += dayModel.payment;
+    if (calendarModel.days.isNotEmpty) {
+      calendarModel.days[calendarModel.days.indexOf(dayModel)].isChecked =
+          !calendarModel.days[calendarModel.days.indexOf(dayModel)].isChecked;
+      if (calendarModel.days[calendarModel.days.indexOf(dayModel)].isChecked) {
+        calendarModel.totalToRefunded -= dayModel.payment;
+      } else {
+        calendarModel.totalToRefunded += dayModel.payment;
+      }
+      _calendarRepository.updateCalendarModel(calendarModel);
     }
-    _calendarRepository.updateCalendarModel(calendarModel);
+  }
+
+  void markMonthlyPayment(CalendarModel calendarModel, MonthModel monthModel) {
+    if (calendarModel.months.isNotEmpty) {
+      calendarModel.months[calendarModel.months.indexOf(monthModel)].isChecked =
+          !calendarModel
+              .months[calendarModel.months.indexOf(monthModel)].isChecked;
+      if (calendarModel
+          .months[calendarModel.months.indexOf(monthModel)].isChecked) {
+        calendarModel.totalToRefunded -= monthModel.payment;
+      } else {
+        calendarModel.totalToRefunded += monthModel.payment;
+      }
+      _calendarRepository.updateCalendarModel(calendarModel);
+    }
   }
 }

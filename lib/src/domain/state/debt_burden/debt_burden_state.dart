@@ -138,7 +138,7 @@ abstract class DebtBurdenStateBase with Store {
             debtBurden: debtBurden,
             monthlyIncome: monthlyIncome,
             title: "Расчет ${_debtRepository.getDebts().length + 1}",
-            countOfMonth: countOfAverageIncomes))
+            countOfMonth: countOfAverageIncomes * 12))
         .then((value) => isSaved = value);
   }
 }

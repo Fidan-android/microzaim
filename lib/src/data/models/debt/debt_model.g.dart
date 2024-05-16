@@ -23,13 +23,13 @@ class DebtModelAdapter extends TypeAdapter<DebtModel> {
       monthlyIncome: fields[3] as int,
       title: fields[4] as String,
       countOfMonth: fields[5] as int,
-    );
+    )..imported = fields[6] as bool;
   }
 
   @override
   void write(BinaryWriter writer, DebtModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.payment)
       ..writeByte(1)
@@ -41,7 +41,9 @@ class DebtModelAdapter extends TypeAdapter<DebtModel> {
       ..writeByte(4)
       ..write(obj.title)
       ..writeByte(5)
-      ..write(obj.countOfMonth);
+      ..write(obj.countOfMonth)
+      ..writeByte(6)
+      ..write(obj.imported);
   }
 
   @override

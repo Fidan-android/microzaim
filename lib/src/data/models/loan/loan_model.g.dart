@@ -21,13 +21,13 @@ class LoanModelAdapter extends TypeAdapter<LoanModel> {
       totalToRefunded: fields[1] as int,
       overpayment: fields[2] as int,
       calculations: (fields[3] as List).cast<CalculationModel>(),
-    );
+    )..imported = fields[4] as bool;
   }
 
   @override
   void write(BinaryWriter writer, LoanModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.lender)
       ..writeByte(1)
@@ -35,7 +35,9 @@ class LoanModelAdapter extends TypeAdapter<LoanModel> {
       ..writeByte(2)
       ..write(obj.overpayment)
       ..writeByte(3)
-      ..write(obj.calculations);
+      ..write(obj.calculations)
+      ..writeByte(4)
+      ..write(obj.imported);
   }
 
   @override

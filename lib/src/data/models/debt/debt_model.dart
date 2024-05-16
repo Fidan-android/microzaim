@@ -22,6 +22,9 @@ class DebtModel {
   @HiveField(5)
   final int countOfMonth;
 
+  @HiveField(6)
+  bool imported = false;
+
   DebtModel(
       {required this.payment,
       required this.averageIncome,

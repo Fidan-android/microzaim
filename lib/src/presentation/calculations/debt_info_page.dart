@@ -23,10 +23,13 @@ class _DebtInfoPageState extends State<DebtInfoPage> {
   void didChangeDependencies() {
     _calculationsState = CalculationsState(ImportRepository());
     _disposers = [
-      reaction((_) => _calculationsState.isSaved, (bool isSaved) {
-        if (isSaved) {
+      reaction((_) => _calculationsState.isSaved, (bool? isSaved) {
+        if (isSaved == true) {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Расчеты успешно сохранены")));
+        } else if (isSaved == false) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Вы уже добавили данный расчет в календарь!")));
         }
       })
     ];

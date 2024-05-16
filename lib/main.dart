@@ -5,6 +5,7 @@ import 'package:microzaim/src/data/models/calendar/calendar_model.dart';
 import 'package:microzaim/src/data/models/day/day_model.dart';
 import 'package:microzaim/src/data/models/debt/debt_model.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
+import 'package:microzaim/src/data/models/month/month_model.dart';
 
 import 'src/internal/app.dart';
 
@@ -20,6 +21,7 @@ Future initHiveDatabase() async {
   Hive.registerAdapter(CalculationModelAdapter());
   Hive.registerAdapter(DebtModelAdapter());
   Hive.registerAdapter(DayModelAdapter());
+  Hive.registerAdapter(MonthModelAdapter());
   Hive.registerAdapter(CalendarModelAdapter());
   await Hive.openBox<LoanModel>('loan_box');
   await Hive.openBox<DebtModel>('debt_box');

@@ -13,15 +13,17 @@ abstract class CalculationsStateBase with Store {
   final ImportRepository _importRepository;
 
   @observable
-  bool isSaved = false;
+  bool? isSaved;
 
   @action
   void saveLoanToImport(LoanModel model) {
+    isSaved = null;
     _importRepository.saveImportLoan(model).then((value) => isSaved = value);
   }
 
   @action
   void saveDebtToImport(DebtModel model) {
+    isSaved = null;
     _importRepository.saveImportDebt(model).then((value) => isSaved = value);
   }
 }

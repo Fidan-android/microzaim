@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'day_model.g.dart';
+part 'month_model.g.dart';
 
-@HiveType(typeId: 5)
-class DayModel {
+@HiveType(typeId: 6)
+class MonthModel {
   @HiveField(0)
   final DateTime dateTime;
 
@@ -16,7 +16,7 @@ class DayModel {
   @HiveField(3)
   bool isChecked;
 
-  DayModel(
+  MonthModel(
       {required this.dateTime,
       required this.payment,
       this.balanceToBePaid = 0,
