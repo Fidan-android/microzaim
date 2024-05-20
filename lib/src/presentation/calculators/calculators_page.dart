@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -51,7 +52,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                 .bodyMedium
                 ?.copyWith(fontWeight: FontWeight.w500, fontSize: 15),
             unselectedLabelStyle:
-                Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(fontSize: 15,
+                Theme.of(context).primaryTextTheme.bodyMedium?.copyWith(
+                      fontSize: 15,
                       fontWeight: FontWeight.w500,
                       color: const Color(0x4D0F3F15),
                     ),
@@ -110,8 +112,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
                                     child: Column(
                                       children: [
                                         Text(
@@ -123,7 +125,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                                   fontWeight: FontWeight.w600),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 8),
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
                                           child: Text(
                                             "Быстро рассчитать общую сумму погашения займа",
                                             style: Theme.of(context)
@@ -147,8 +150,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                         ),
                       ),
                       GestureDetector(
-                        onTap: () =>
-                            AutoRouter.of(context).pushNamed("/debt-burden-page"),
+                        onTap: () => AutoRouter.of(context)
+                            .pushNamed("/debt-burden-page"),
                         child: Card(
                           elevation: 0,
                           color: const Color(0xFFF1F1F1),
@@ -181,8 +184,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
                                     child: Column(
                                       children: [
                                         Text(
@@ -194,7 +197,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                                   fontWeight: FontWeight.w600),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 8),
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
                                           child: Text(
                                             "Быстро рассчитать процент долговой нагрузки",
                                             style: Theme.of(context)
@@ -266,7 +270,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                       .push(LoanInfoRoute(loanModel: model));
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                                  padding: const EdgeInsets.only(
+                                      top: 8, left: 16, right: 16),
                                   child: Container(
                                     height: 100,
                                     decoration: BoxDecoration(
@@ -280,49 +285,62 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                model.lender,
-                                                style: Theme.of(context)
-                                                    .primaryTextTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 16,
-                                                    ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.only(top: 8),
-                                                child: Text(
-                                                  "Итого к возврату: ${model.totalToRefunded}",
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  model.lender,
                                                   style: Theme.of(context)
                                                       .primaryTextTheme
-                                                      .bodySmall
+                                                      .bodyLarge
                                                       ?.copyWith(
-                                                        color: const Color(
-                                                            0xB30F3F15),
-                                                      ),
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 16,
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                  maxLines: 1,
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.only(top: 8),
-                                                child: Text(
-                                                  "Переплата: ${model.overpayment}",
-                                                  style: Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .bodySmall
-                                                      ?.copyWith(
-                                                        color: const Color(
-                                                            0xB30F3F15),
-                                                      ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 8),
+                                                  child: Text(
+                                                    "Итого к возврату: ${model.totalToRefunded}",
+                                                    style: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .bodySmall
+                                                        ?.copyWith(
+                                                          color: const Color(
+                                                              0xB30F3F15),
+                                                        ),
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.center,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 8),
+                                                  child: Text(
+                                                    "Переплата: ${model.overpayment}",
+                                                    style: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .bodySmall
+                                                        ?.copyWith(
+                                                          color: const Color(
+                                                              0xB30F3F15),
+                                                        ),
+                                                    maxLines: 1,
+                                                    textAlign: TextAlign.center,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           SvgPicture.asset(
                                               "assets/images/main/ic_arrow_right.svg"),
@@ -370,7 +388,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                       .push(DebtInfoRoute(debtModel: model));
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                                  padding: const EdgeInsets.only(
+                                      top: 8, left: 16, right: 16),
                                   child: Container(
                                     height: 100,
                                     decoration: BoxDecoration(
@@ -394,13 +413,16 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                                     .primaryTextTheme
                                                     .bodyLarge
                                                     ?.copyWith(
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       fontSize: 16,
                                                     ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(top: 8),
+                                                padding: const EdgeInsets.only(
+                                                    top: 8),
                                                 child: Text(
                                                   "Платеж/мес: ${model.monthlyIncome}",
                                                   style: Theme.of(context)
@@ -413,8 +435,8 @@ class _CalculatorsPageState extends State<CalculatorsPage>
                                                 ),
                                               ),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(top: 8),
+                                                padding: const EdgeInsets.only(
+                                                    top: 8),
                                                 child: Text(
                                                   "Долговая нагрузка: ${model.debtBurden}%",
                                                   style: Theme.of(context)

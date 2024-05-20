@@ -410,7 +410,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                                           const EdgeInsets.only(
                                                               top: 8),
                                                       child: Text(
-                                                        "Ежедневный платеж: ${monthModel?.payment ?? 0}",
+                                                        "Ежемесячный платеж: ${monthModel?.payment ?? 0}",
                                                         style: Theme.of(context)
                                                             .primaryTextTheme
                                                             .bodySmall,
@@ -614,7 +614,7 @@ class _CalendarPageState extends State<CalendarPage> {
                                                         const EdgeInsets.only(
                                                             top: 8),
                                                     child: Text(
-                                                      "Ежедневный платеж: ${monthModel?.payment ?? 0}",
+                                                      "Ежемесячный платеж: ${monthModel?.payment ?? 0}",
                                                       style: Theme.of(context)
                                                           .primaryTextTheme
                                                           .bodySmall,

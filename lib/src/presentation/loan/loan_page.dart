@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:microzaim/src/data/repository/lender_repository.dart';
 import 'package:microzaim/src/data/repository/loan_repository.dart';
@@ -108,6 +109,12 @@ class _LoanPageState extends State<LoanPage> {
                                                     _amountLoanController,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  LengthLimitingTextInputFormatter(
+                                                      10),
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
                                                 decoration: InputDecoration(
                                                   labelText: 'Сумма займа',
                                                   border: InputBorder.none,
@@ -162,6 +169,12 @@ class _LoanPageState extends State<LoanPage> {
                                                 controller: _termLoanController,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  LengthLimitingTextInputFormatter(
+                                                      3),
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
                                                 decoration: InputDecoration(
                                                   labelText: 'Срок займа',
                                                   border: InputBorder.none,
@@ -217,6 +230,12 @@ class _LoanPageState extends State<LoanPage> {
                                                     _percentagePerDayController,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  LengthLimitingTextInputFormatter(
+                                                      2),
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
                                                 decoration: InputDecoration(
                                                   labelText: 'Процент в день',
                                                   border: InputBorder.none,
@@ -292,6 +311,9 @@ class _LoanPageState extends State<LoanPage> {
                                             child: TextFormField(
                                               controller:
                                                   _lenderEditingController,
+                                              inputFormatters: [
+                                                LengthLimitingTextInputFormatter(100)
+                                              ],
                                               decoration: InputDecoration(
                                                 labelText: 'Займодатель',
                                                 border: InputBorder.none,
@@ -543,24 +565,30 @@ class _LoanPageState extends State<LoanPage> {
                                             ),
                                             child: Center(
                                               child: Observer(
-                                                builder: (_) => Text(
-                                                  _loanState.totalToRefunded
-                                                      .round()
-                                                      .toString(),
-                                                  style: Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .bodyMedium
-                                                      ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: _loanState
-                                                                    .totalToRefunded ==
-                                                                0
-                                                            ? const Color(
-                                                                0x4D878987)
-                                                            : const Color(
-                                                                0xFF0F3F15),
-                                                      ),
+                                                builder: (_) => Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 8),
+                                                  child: Text(
+                                                    _loanState.totalToRefunded
+                                                        .round()
+                                                        .toString(),
+                                                    style: Theme.of(context)
+                                                        .primaryTextTheme
+                                                        .bodyMedium
+                                                        ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: _loanState.totalToRefunded ==
+                                                                  0
+                                                              ? const Color(
+                                                                  0x4D878987)
+                                                              : const Color(
+                                                                  0xFF0F3F15),
+                                                        ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ),
                                             ),

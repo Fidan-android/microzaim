@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -141,56 +142,60 @@ class _ImportPageState extends State<ImportPage> with TickerProviderStateMixin {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        model.lender,
-                                                        style: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .bodyLarge
-                                                            ?.copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 16,
-                                                            ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8),
-                                                        child: Text(
-                                                          "Итого к возврату: ${model.totalToRefunded}",
-                                                          style: Theme.of(
-                                                                  context)
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          model.lender,
+                                                          style: Theme.of(context)
                                                               .primaryTextTheme
-                                                              .bodySmall
+                                                              .bodyLarge
                                                               ?.copyWith(
-                                                                color: const Color(
-                                                                    0xB30F3F15),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 16,
                                                               ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
                                                         ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8),
-                                                        child: Text(
-                                                          "Переплата: ${model.overpayment}",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .primaryTextTheme
-                                                              .bodySmall
-                                                              ?.copyWith(
-                                                                color: const Color(
-                                                                    0xB30F3F15),
-                                                              ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(top: 8),
+                                                          child: Text(
+                                                            "Итого к возврату: ${model.totalToRefunded}",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .bodySmall
+                                                                ?.copyWith(
+                                                                  color: const Color(
+                                                                      0xB30F3F15),
+                                                                ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(top: 8),
+                                                          child: Text(
+                                                            "Переплата: ${model.overpayment}",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .primaryTextTheme
+                                                                .bodySmall
+                                                                ?.copyWith(
+                                                                  color: const Color(
+                                                                      0xB30F3F15),
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                   SvgPicture.asset(
                                                       "assets/images/main/ic_arrow_right.svg"),

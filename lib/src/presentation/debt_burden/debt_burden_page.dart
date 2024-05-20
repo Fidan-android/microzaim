@@ -108,6 +108,7 @@ class _DebtBurdenPageState extends State<DebtBurdenPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),
                                   child: CustomEditText(
+                                    maxLength: 10,
                                     mController: _amountDebtController,
                                     mLabel: 'Сумма кредита/займа',
                                   ),
@@ -235,6 +236,7 @@ class _DebtBurdenPageState extends State<DebtBurdenPage> {
                                   child: CustomEditText(
                                     mController: _percentageController,
                                     mLabel: 'Процентная ставка %',
+                                    maxLength: 2,
                                   ),
                                 ),
                                 Observer(
@@ -580,6 +582,7 @@ class _DebtBurdenPageState extends State<DebtBurdenPage> {
           padding: const EdgeInsets.only(top: 8),
           child: CustomEditText(
             mLabel: 'Среднемесячный доход за ${i + 1}-й год',
+            maxLength: 10,
             onChange: (value) {
               _debtBurdenState.updateIncomes(i, value);
             },

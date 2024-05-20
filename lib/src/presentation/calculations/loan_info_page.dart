@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
 import 'package:microzaim/src/data/repository/import_repository.dart';
@@ -57,21 +58,31 @@ class _LoanInfoPageState extends State<LoanInfoPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () => AutoRouter.of(context).pop(),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Theme.of(context).primaryColor,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: GestureDetector(
+                        onTap: () => AutoRouter.of(context).pop(),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        widget.loanModel.lender,
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyMedium
-                            ?.copyWith(
-                                fontSize: 20, fontWeight: FontWeight.w600),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Center(
+                          child: Text(
+                            widget.loanModel.lender,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox.shrink(),

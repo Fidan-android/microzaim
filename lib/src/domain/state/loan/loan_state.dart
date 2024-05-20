@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:microzaim/src/data/models/calculation/calculation_model.dart';
 import 'package:microzaim/src/data/models/loan/loan_model.dart';
 import 'package:microzaim/src/data/repository/lender_repository.dart';
@@ -48,11 +47,6 @@ abstract class LoanStateBase with Store {
   @action
   void doCalculations(String selectedLender, String amountLoan, String termLoan,
       String percentagePerDay) {
-    debugPrint("lender: $selectedLender");
-    debugPrint("amountLoan: $amountLoan");
-    debugPrint("termLoan: $termLoan");
-    debugPrint("percentagePerDay: $percentagePerDay");
-
     if (selectedLender.isEmpty ||
         amountLoan.isEmpty ||
         termLoan.isEmpty ||

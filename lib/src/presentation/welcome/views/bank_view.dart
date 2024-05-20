@@ -22,21 +22,19 @@ class BankView extends StatelessWidget {
             ),
           ),
         ),
-        const Text(
+        Text(
           "Мы не являемся кредитной организацией",
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontFamily: "SFProText",
-              fontWeight: FontWeight.w500),
+          style: Theme.of(context)
+              .primaryTextTheme
+              .bodyLarge
+              ?.copyWith(fontSize: 24, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 12),
           child: Text(
             "Мы не осуществляем выдачу займов\nили кредитов пользователям нашего приложения",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontFamily: "SFProText"),
+            style: Theme.of(context).primaryTextTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),

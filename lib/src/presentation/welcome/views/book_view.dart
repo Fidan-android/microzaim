@@ -22,21 +22,19 @@ class BookView extends StatelessWidget {
             ),
           ),
         ),
-        const Text(
+        Text(
           "Мы предоставляем информацию по сфере микрофинансов",
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontFamily: "SFProText",
-              fontWeight: FontWeight.w500),
+          style: Theme.of(context)
+              .primaryTextTheme
+              .bodyLarge
+              ?.copyWith(fontSize: 24, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 12),
           child: Text(
             "В нашем приложении вы можете\nнайти информационный блок по\nсфере микрофинансов в России и\nКазахстане",
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontFamily: "SFProText"),
+            style: Theme.of(context).primaryTextTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),
